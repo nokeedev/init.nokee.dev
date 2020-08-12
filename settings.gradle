@@ -1,2 +1,9 @@
-rootProject.name = 'init.nokee.dev'
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url = 'https://dl.bintray.com/nokeedev/documentations' }
+        maven { url = 'https://dl.bintray.com/nokeedev/distributions-snapshots' }
+    }
+}
 
+rootProject.name = 'init.nokee.dev'

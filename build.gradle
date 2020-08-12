@@ -1,4 +1,55 @@
 plugins {
     id 'dev.gradleplugins.java-gradle-plugin' version '1.1'
+    id 'dev.nokee.documentation.bintray-publish' version '0.1.7'
+    id 'dev.gradleplugins.gradle-plugin-unit-test' version '1.1'
+    id 'dev.gradleplugins.gradle-plugin-functional-test' version '1.1'
 }
 
+group = 'dev.nokee.init'
+version = '0.1'
+
+repositories {
+    jcenter()
+    gradlePluginDevelopment()
+}
+
+gradlePlugin {
+    compatibility {
+        minimumGradleVersion = '6.2.1'
+    }
+    java {
+        withJavadocJar()
+        withSourcesJar()
+    }
+}
+
+test {
+    dependencies {
+        implementation spockFramework()
+        implementation groovy()
+        implementation 'net.bytebuddy:byte-buddy:1.10.14'
+        implementation 'cglib:cglib-nodep:3.3.0'
+        implementation 'org.objenesis:objenesis:3.1'
+    }
+}
+
+functionalTest {
+    dependencies {
+        implementation spockFramework()
+        implementation groovy()
+        implementation gradleFixtures()
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url = 'https://dl.bintray.com/nokeedev/distributions-initialization'
+            ext.packageName = 'dev.nokee.init'
+            credentials {
+                username = System.getProperty('dev.nokee.env.BINTRAY_USER')
+                password = System.getProperty('dev.nokee.env.BINTRAY_KEY')
+            }
+        }
+    }
+}

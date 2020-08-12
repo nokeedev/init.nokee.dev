@@ -1,0 +1,9 @@
+initscript {
+    repositories {
+        maven { url = 'https://dl.bintray.com/nokeedev/distributions-initialization' }
+    }
+    dependencies {
+        classpath 'dev.nokee.init:init.nokee.dev:latest.release'
+    }
+}
+apply plugin: dev.nokee.init.NokeeInitPlugin
