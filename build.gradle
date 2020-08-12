@@ -1,0 +1,4 @@
+plugins {
+    id 'dev.gradleplugins.java-gradle-plugin' version '1.1'
+}
+
