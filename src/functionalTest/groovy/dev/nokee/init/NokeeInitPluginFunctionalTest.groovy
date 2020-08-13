@@ -77,4 +77,18 @@ class NokeeInitPluginFunctionalTest extends AbstractGradleSpecification {
         then:
         result.assertOutputContains('USAGE: gradlew nokee [option...]')
     }
+
+    def "can execute build init"() {
+        given:
+        println testDirectory
+        executer = executer.ignoresMissingSettingsFile()
+        def initScript = file('nokee.init.gradle')
+        initScript << configurePluginClasspathAsBuildScriptDependencies().replace('buildscript', 'initscript') << '''
+            apply plugin: dev.nokee.init.NokeeInitPlugin
+        '''
+        usingInitScript(initScript)
+
+        expect:
+        succeeds('init', '--type', 'nokee-cpp-application', '--dsl', 'groovy')
+    }
 }
