@@ -20,7 +20,7 @@ public final class ProjectNokeeVersionProvider implements NokeeVersionProvider {
     @Override
     public Optional<VersionNumber> get() {
         try {
-            String content = FileUtils.readFileToString(new File(projectDirectory.get(), ".gradle/use-nokee-version.txt"), Charset.defaultCharset());
+            String content = FileUtils.readFileToString(new File(projectDirectory.get(), ".gradle/use-nokee-version.txt"), Charset.defaultCharset()).trim();
             return Optional.of(VersionNumber.parse(content));
         } catch (IOException ex) {
             return Optional.empty();
