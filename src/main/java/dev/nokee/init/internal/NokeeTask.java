@@ -1,5 +1,8 @@
 package dev.nokee.init.internal;
 
+import dev.nokee.init.internal.accessors.DefaultEnvironmentVariableAccessor;
+import dev.nokee.init.internal.accessors.DefaultSystemPropertyAccessor;
+import dev.nokee.init.internal.versions.DefaultNokeeVersionProvider;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.provider.Property;
@@ -43,7 +46,7 @@ public abstract class NokeeTask extends DefaultTask {
               }
 
               if (getShowVersion().getOrElse(false)) {
-                     new ShowVersionCommand(new DefaultConsolePrinter(), new ProjectNokeeVersionProvider(getLayout().getProjectDirectory()::getAsFile)).run();
+                     new ShowVersionCommand(new DefaultConsolePrinter(), new DefaultNokeeVersionProvider(getLayout().getProjectDirectory()::getAsFile, new DefaultSystemPropertyAccessor(), new DefaultEnvironmentVariableAccessor())).run();
               }
 
               if (getNokeeVersion().isPresent()) {
