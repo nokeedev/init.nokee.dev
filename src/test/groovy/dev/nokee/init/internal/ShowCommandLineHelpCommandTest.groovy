@@ -18,8 +18,8 @@ class ShowCommandLineHelpCommandTest extends Specification {
         outStream.toString() == '''
 USAGE: gradlew nokee [option...]
 
---help\t\tShows help message.
---version\t\tPrint version info.
+--show-help\t\t\tShows help message.
+--show-version\t\tPrint version info.
 --use-version\t\tSpecifies the nokee version to use in this project.
 
 '''

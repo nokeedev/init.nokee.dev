@@ -78,6 +78,39 @@ class NokeeInitPluginFunctionalTest extends AbstractGradleSpecification {
         result.assertOutputContains('USAGE: gradlew nokee [option...]')
     }
 
+    def "shows version if nokee task executes with --show-version flag"() {
+        given:
+        def initScript = file('nokee.init.gradle')
+        initScript << configurePluginClasspathAsBuildScriptDependencies().replace('buildscript', 'initscript') << '''
+            apply plugin: dev.nokee.init.NokeeInitPlugin
+        '''
+        usingInitScript(initScript)
+
+        and:
+        file('.gradle/use-nokee-version.txt') << '0.4.0'
+
+        when:
+        def result = succeeds('nokee', '--show-version')
+
+        then:
+        result.assertOutputContains("Build ':' use Nokee version '0.4.0'.")
+        result.assertOutputContains('Using Nokee 0.4.0')
+    }
+
+    def "shows help if nokee task executes with --show-help flag"() {
+        def initScript = file('nokee.init.gradle')
+        initScript << configurePluginClasspathAsBuildScriptDependencies().replace('buildscript', 'initscript') << '''
+            apply plugin: dev.nokee.init.NokeeInitPlugin
+        '''
+        usingInitScript(initScript)
+
+        when:
+        def result = succeeds('nokee', '--show-help')
+
+        then:
+        result.assertOutputContains('USAGE: gradlew nokee [option...]')
+    }
+
     def "can execute build init"() {
         given:
         println testDirectory
