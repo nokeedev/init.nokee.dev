@@ -17,7 +17,7 @@ import org.gradle.buildinit.plugins.internal.GitAttributesGenerator;
 import org.gradle.buildinit.plugins.internal.GitIgnoreGenerator;
 import org.gradle.buildinit.plugins.internal.ProjectLayoutSetupRegistry;
 
-public class RegisterNokeeBuildInitTemplateAction implements Action<Project> {
+public final class RegisterNokeeBuildInitTemplateAction implements Action<Project> {
     private DocumentationRegistry documentationRegistry = new NokeeDocumentationRegistry();
 
     @Override

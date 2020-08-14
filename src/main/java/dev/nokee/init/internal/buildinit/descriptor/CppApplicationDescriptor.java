@@ -4,7 +4,7 @@ import dev.nokee.init.internal.buildinit.NokeeLanguages;
 import org.gradle.buildinit.plugins.internal.modifiers.ComponentType;
 import org.gradle.buildinit.plugins.internal.modifiers.Language;
 
-public class CppApplicationDescriptor implements NokeeProjectInitDescriptor {
+public final class CppApplicationDescriptor implements NokeeProjectInitDescriptor {
     private static final Language LANGUAGE = Language.withName("[nokee] C++", "cpp");
 
     @Override

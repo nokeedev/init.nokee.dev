@@ -4,7 +4,7 @@ import dev.nokee.init.internal.buildinit.NokeeLanguages;
 import org.gradle.buildinit.plugins.internal.modifiers.ComponentType;
 import org.gradle.buildinit.plugins.internal.modifiers.Language;
 
-public class WithGoogleTestDescriptor implements NokeeProjectInitDescriptor {
+public final class WithGoogleTestDescriptor implements NokeeProjectInitDescriptor {
     private final NokeeProjectInitDescriptor delegate;
 
     public WithGoogleTestDescriptor(NokeeProjectInitDescriptor delegate) {

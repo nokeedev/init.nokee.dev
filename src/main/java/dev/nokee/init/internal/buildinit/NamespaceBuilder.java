@@ -16,7 +16,7 @@
 
 package dev.nokee.init.internal.buildinit;
 
-public class NamespaceBuilder {
+public final class NamespaceBuilder {
     public static String toNamespace(String name) {
         StringBuilder result = new StringBuilder();
         int pos = 0;

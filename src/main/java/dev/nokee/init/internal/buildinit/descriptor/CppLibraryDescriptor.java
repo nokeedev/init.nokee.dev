@@ -4,7 +4,7 @@ import dev.nokee.init.internal.buildinit.NokeeLanguages;
 import org.gradle.buildinit.plugins.internal.modifiers.ComponentType;
 import org.gradle.buildinit.plugins.internal.modifiers.Language;
 
-public class CppLibraryDescriptor implements NokeeProjectInitDescriptor {
+public final class CppLibraryDescriptor implements NokeeProjectInitDescriptor {
     @Override
     public String getId() {
         return "nokee-cpp-library";

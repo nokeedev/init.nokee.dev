@@ -4,7 +4,7 @@ import org.gradle.api.Action;
 import org.gradle.plugin.management.PluginManagementSpec;
 import org.gradle.util.VersionNumber;
 
-public class ConfigurePluginManagementAction implements Action<PluginManagementSpec> {
+public final class ConfigurePluginManagementAction implements Action<PluginManagementSpec> {
     private final VersionNumber nokeeVersion;
 
     public ConfigurePluginManagementAction(VersionNumber nokeeVersion) {

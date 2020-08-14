@@ -4,7 +4,9 @@ import org.gradle.buildinit.plugins.internal.modifiers.Language;
 
 import java.util.Arrays;
 
-public class NokeeLanguages {
+public final class NokeeLanguages {
+    private NokeeLanguages() {}
+
     public static final Language CPP = Language.withName("[nokee] C++", "cpp");
     public static final Language C = Language.withName("[nokee] C", "c");
     private static final Language CPP_WITH_GOOGLE_TEST = Language.withName("[nokee] C++ with Google Test", "cpp-with-google-test");
