@@ -1,6 +1,11 @@
 initscript {
     repositories {
         maven { url = 'https://dl.bintray.com/nokeedev/distributions-initialization' }
+        mavenLocal {
+            content {
+                it.includeModule('dev.nokee.init', 'init.nokee.dev')
+            }
+        }
     }
     dependencies {
         classpath 'dev.nokee.init:init.nokee.dev:latest.release'
