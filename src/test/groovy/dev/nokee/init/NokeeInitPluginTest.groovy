@@ -4,6 +4,7 @@ import dev.nokee.init.internal.GradleVersionProvider
 import dev.nokee.init.internal.NokeeInitBuildListener
 import dev.nokee.init.internal.OnlyIfInitTaskIsRequestedAction
 import dev.nokee.init.internal.RegisterNokeeTaskAction
+import dev.nokee.init.internal.wrapper.OnlyWhenWrapperPluginIsAppliedAction
 import org.gradle.api.invocation.Gradle
 import org.gradle.util.GradleVersion
 import spock.lang.Specification
@@ -57,5 +58,16 @@ class NokeeInitPluginTest extends Specification {
 
         then:
         1 * gradle.rootProject(_ as OnlyIfInitTaskIsRequestedAction)
+    }
+
+    def "register wrapper gateway configuration action"() {
+        given:
+        def subject = new NokeeInitPlugin()
+
+        when:
+        subject.apply(gradle)
+
+        then:
+        1 * gradle.rootProject(_ as OnlyWhenWrapperPluginIsAppliedAction)
     }
 }

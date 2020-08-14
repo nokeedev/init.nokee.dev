@@ -2,6 +2,8 @@ package dev.nokee.init;
 
 import dev.nokee.init.internal.*;
 import dev.nokee.init.internal.buildinit.RegisterNokeeBuildInitTemplateAction;
+import dev.nokee.init.internal.wrapper.OnlyWhenWrapperPluginIsAppliedAction;
+import dev.nokee.init.internal.wrapper.RegisterWrapperTaskConfigurationAction;
 import org.gradle.api.Plugin;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.util.GradleVersion;
@@ -27,6 +29,7 @@ public class NokeeInitPlugin implements Plugin<Gradle> {
             gradle.addBuildListener(new NokeeInitBuildListener(new DefaultNokeeVersionProviderFactory()));
             gradle.rootProject(new RegisterNokeeTaskAction());
             gradle.rootProject(new OnlyIfInitTaskIsRequestedAction(new RegisterNokeeBuildInitTemplateAction()));
+            gradle.rootProject(new OnlyWhenWrapperPluginIsAppliedAction(new RegisterWrapperTaskConfigurationAction()));
         }
     }
 }
