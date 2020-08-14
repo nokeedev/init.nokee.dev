@@ -13,7 +13,7 @@ public final class DefaultNokeeVersionProvider implements NokeeVersionProvider {
     private final NokeeVersionProvider delegate;
 
     public DefaultNokeeVersionProvider(Supplier<File> projectDirectory, SystemPropertyAccessor systemPropertyAccessor, EnvironmentVariableAccessor environmentVariableAccessor) {
-        this.delegate = new CompositeNokeeVersionProvider(new DefaultSystemPropertyNokeeVersionProvider(systemPropertyAccessor), new EnvironmentVariableNokeeVersionProvider(environmentVariableAccessor), new ProjectNokeeVersionProvider(projectDirectory), new WrapperSystemPropertyNokeeVersionProvider(systemPropertyAccessor), new NonRelocatedWrapperPropertiesNokeeVersionProvider(projectDirectory));
+        this.delegate = new CompositeNokeeVersionProvider(new DefaultSystemPropertyNokeeVersionProvider(systemPropertyAccessor), new EnvironmentVariableNokeeVersionProvider(environmentVariableAccessor), new CacheFileNokeeVersionProvider(projectDirectory), new WrapperSystemPropertyNokeeVersionProvider(systemPropertyAccessor), new NonRelocatedWrapperPropertiesNokeeVersionProvider(projectDirectory));
     }
 
     @Override

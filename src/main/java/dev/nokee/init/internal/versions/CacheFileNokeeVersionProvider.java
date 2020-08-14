@@ -10,10 +10,10 @@ import java.nio.charset.Charset;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public final class ProjectNokeeVersionProvider implements NokeeVersionProvider {
+public final class CacheFileNokeeVersionProvider implements NokeeVersionProvider {
     private final Supplier<File> projectDirectory;
 
-    public ProjectNokeeVersionProvider(Supplier<File> projectDirectory) {
+    public CacheFileNokeeVersionProvider(Supplier<File> projectDirectory) {
         this.projectDirectory = projectDirectory;
     }
 

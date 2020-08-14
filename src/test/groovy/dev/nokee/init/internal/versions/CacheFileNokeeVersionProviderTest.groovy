@@ -5,10 +5,10 @@ import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 import spock.lang.Subject
 
-@Subject(ProjectNokeeVersionProvider)
-class ProjectNokeeVersionProviderTest extends Specification {
+@Subject(CacheFileNokeeVersionProvider)
+class CacheFileNokeeVersionProviderTest extends Specification {
     @Rule TemporaryFolder temporaryFolder = new TemporaryFolder()
-    def subject = new ProjectNokeeVersionProvider({ temporaryFolder.root })
+    def subject = new CacheFileNokeeVersionProvider({ temporaryFolder.root })
 
 
     def "can read version for specific project"() {
@@ -20,10 +20,7 @@ class ProjectNokeeVersionProviderTest extends Specification {
 
         then:
         version.present
-        version.get().major == 1
-        version.get().minor == 2
-        version.get().micro == 3
-        version.get().qualifier == 'deadbeef'
+        version.get().toString() == '1.2.3-deadbeef'
     }
 
     def "trims newlines from the version file"() {
@@ -35,10 +32,7 @@ class ProjectNokeeVersionProviderTest extends Specification {
 
         then:
         version.present
-        version.get().major == 1
-        version.get().minor == 2
-        version.get().micro == 3
-        version.get().qualifier == 'deadbeef'
+        version.get().toString() == '1.2.3-deadbeef'
     }
 
     def "returns empty version when version file does not exists"() {
