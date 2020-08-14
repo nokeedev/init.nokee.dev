@@ -2,7 +2,7 @@ package dev.nokee.init
 
 import dev.nokee.init.internal.versions.GradleVersionProvider
 import dev.nokee.init.internal.NokeeInitBuildListener
-import dev.nokee.init.internal.OnlyIfInitTaskIsRequestedAction
+import dev.nokee.init.internal.buildinit.OnlyIfInitTaskIsRequestedAction
 import dev.nokee.init.internal.RegisterNokeeTaskAction
 import dev.nokee.init.internal.wrapper.OnlyWhenWrapperPluginIsAppliedAction
 import org.gradle.api.invocation.Gradle

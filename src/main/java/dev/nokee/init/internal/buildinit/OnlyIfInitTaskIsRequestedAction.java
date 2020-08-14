@@ -1,4 +1,4 @@
-package dev.nokee.init.internal;
+package dev.nokee.init.internal.buildinit;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;

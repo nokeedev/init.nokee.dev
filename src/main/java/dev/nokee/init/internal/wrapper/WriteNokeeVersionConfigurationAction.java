@@ -1,6 +1,6 @@
 package dev.nokee.init.internal.wrapper;
 
-import dev.nokee.init.internal.FileUtils;
+import dev.nokee.init.internal.utils.FileUtils;
 import dev.nokee.init.internal.versions.NokeeVersionProvider;
 import org.gradle.api.Action;
 import org.gradle.api.Task;

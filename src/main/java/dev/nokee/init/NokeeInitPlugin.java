@@ -1,6 +1,7 @@
 package dev.nokee.init;
 
 import dev.nokee.init.internal.*;
+import dev.nokee.init.internal.buildinit.OnlyIfInitTaskIsRequestedAction;
 import dev.nokee.init.internal.buildinit.RegisterNokeeBuildInitTemplateAction;
 import dev.nokee.init.internal.versions.DefaultGradleVersionProvider;
 import dev.nokee.init.internal.versions.DefaultNokeeVersionProviderFactory;

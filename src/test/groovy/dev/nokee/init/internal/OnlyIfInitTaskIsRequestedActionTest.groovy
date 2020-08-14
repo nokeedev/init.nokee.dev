@@ -1,5 +1,6 @@
 package dev.nokee.init.internal
 
+import dev.nokee.init.internal.buildinit.OnlyIfInitTaskIsRequestedAction
 import org.gradle.StartParameter
 import org.gradle.api.Action
 import org.gradle.api.Project

@@ -1,5 +1,6 @@
 package dev.nokee.init.internal;
 
+import dev.nokee.init.internal.utils.GradleUtils;
 import dev.nokee.init.internal.versions.NokeeVersionProviderFactory;
 import org.gradle.BuildAdapter;
 import org.gradle.api.initialization.Settings;

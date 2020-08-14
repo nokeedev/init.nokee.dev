@@ -1,4 +1,4 @@
-package dev.nokee.init.internal;
+package dev.nokee.init.internal.utils;
 
 import java.io.*;
 import java.nio.charset.Charset;

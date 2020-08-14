@@ -1,4 +1,4 @@
-package dev.nokee.init.internal;
+package dev.nokee.init.internal.utils;
 
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.internal.GradleInternal;
