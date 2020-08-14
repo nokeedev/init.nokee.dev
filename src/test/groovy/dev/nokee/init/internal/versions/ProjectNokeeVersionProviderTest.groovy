@@ -1,4 +1,4 @@
-package dev.nokee.init.internal
+package dev.nokee.init.internal.versions
 
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
