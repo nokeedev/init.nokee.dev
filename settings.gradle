@@ -8,4 +8,6 @@ pluginManagement {
 
 rootProject.name = 'init.nokee.dev'
 
-includeBuild '../toolbox'
+if (file('../toolbox').exists()) {
+    includeBuild '../toolbox'
+}
