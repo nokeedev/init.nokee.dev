@@ -1,5 +1,7 @@
-package dev.nokee.init.internal
+package dev.nokee.init.internal.commands
 
+
+import dev.nokee.init.internal.NokeeVersionWriter
 import spock.lang.Specification
 import spock.lang.Subject
 

@@ -1,7 +1,6 @@
-package dev.nokee.init.internal;
+package dev.nokee.init.internal.commands;
 
-import java.util.Optional;
-import java.util.function.Supplier;
+import dev.nokee.init.internal.ConsolePrinter;
 
 public final class ShowCommandLineHelpCommand implements Runnable {
     public static final String FLAG = "show-help";

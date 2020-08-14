@@ -1,5 +1,7 @@
-package dev.nokee.init.internal;
+package dev.nokee.init.internal.commands;
 
+import dev.nokee.init.internal.ConsolePrinter;
+import dev.nokee.init.internal.NokeeVersionProvider;
 import org.gradle.util.VersionNumber;
 
 import java.util.Optional;

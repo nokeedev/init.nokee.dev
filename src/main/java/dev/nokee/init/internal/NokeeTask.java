@@ -2,6 +2,9 @@ package dev.nokee.init.internal;
 
 import dev.nokee.init.internal.accessors.DefaultEnvironmentVariableAccessor;
 import dev.nokee.init.internal.accessors.DefaultSystemPropertyAccessor;
+import dev.nokee.init.internal.commands.ConfigureNokeeVersionCommand;
+import dev.nokee.init.internal.commands.ShowCommandLineHelpCommand;
+import dev.nokee.init.internal.commands.ShowVersionCommand;
 import dev.nokee.init.internal.versions.DefaultNokeeVersionProvider;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.ProjectLayout;
