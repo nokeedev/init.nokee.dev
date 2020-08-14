@@ -1,4 +1,4 @@
-package dev.nokee.init.internal
+package dev.nokee.init.internal.buildinit
 
 import dev.nokee.init.internal.buildinit.OnlyIfInitTaskIsRequestedAction
 import org.gradle.StartParameter
