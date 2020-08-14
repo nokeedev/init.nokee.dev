@@ -1,5 +1,6 @@
 package dev.nokee.init.internal.wrapper;
 
+import dev.nokee.init.internal.accessors.DefaultGradlePropertyAccessor;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.wrapper.Wrapper;
@@ -7,6 +8,6 @@ import org.gradle.api.tasks.wrapper.Wrapper;
 public final class RegisterWrapperTaskConfigurationAction implements Action<Project> {
     @Override
     public void execute(Project project) {
-        project.getTasks().named("wrapper", Wrapper.class, new RegisterNokeeWrapperExtensionAction(project.getObjects(), project.getProviders(), project.getLayout()));
+        project.getTasks().named("wrapper", Wrapper.class, new RegisterNokeeWrapperExtensionAction(project.getObjects(), project.getLayout(), new DefaultGradlePropertyAccessor(project)));
     }
 }
