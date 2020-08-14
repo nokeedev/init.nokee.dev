@@ -8,6 +8,6 @@ import org.gradle.api.initialization.Settings;
 public final class DefaultNokeeVersionProviderFactory implements NokeeVersionProviderFactory {
     @Override
     public NokeeVersionProvider create(Settings settings) {
-        return new DefaultNokeeVersionProvider(() -> GradleUtils.getRootBuildDirectory(settings), new DefaultSystemPropertyAccessor(), new DefaultEnvironmentVariableAccessor());
+        return new DefaultNokeeVersionProvider(() -> GradleUtils.getRootBuildDirectory(settings), DefaultSystemPropertyAccessor.INSTANCE, DefaultEnvironmentVariableAccessor.INSTANCE);
     }
 }
