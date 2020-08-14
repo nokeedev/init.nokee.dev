@@ -1,8 +1,8 @@
-package dev.nokee.init.internal;
+package dev.nokee.init.internal.versions;
 
+import dev.nokee.init.internal.GradleUtils;
 import dev.nokee.init.internal.accessors.DefaultEnvironmentVariableAccessor;
 import dev.nokee.init.internal.accessors.DefaultSystemPropertyAccessor;
-import dev.nokee.init.internal.versions.DefaultNokeeVersionProvider;
 import org.gradle.api.initialization.Settings;
 
 public final class DefaultNokeeVersionProviderFactory implements NokeeVersionProviderFactory {

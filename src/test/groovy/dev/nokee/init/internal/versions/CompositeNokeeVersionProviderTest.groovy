@@ -1,6 +1,6 @@
 package dev.nokee.init.internal.versions
 
-import dev.nokee.init.internal.NokeeVersionProvider
+
 import org.gradle.util.VersionNumber
 import spock.lang.Specification
 import spock.lang.Subject

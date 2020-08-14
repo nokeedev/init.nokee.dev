@@ -1,7 +1,6 @@
 package dev.nokee.init.internal.versions;
 
 import dev.nokee.init.internal.FileUtils;
-import dev.nokee.init.internal.NokeeVersionProvider;
 import org.gradle.util.VersionNumber;
 
 import java.io.File;

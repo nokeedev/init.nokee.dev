@@ -1,4 +1,4 @@
-package dev.nokee.init.internal;
+package dev.nokee.init.internal.versions;
 
 import org.gradle.util.GradleVersion;
 

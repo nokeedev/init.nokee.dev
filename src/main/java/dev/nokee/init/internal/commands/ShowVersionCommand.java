@@ -1,11 +1,10 @@
 package dev.nokee.init.internal.commands;
 
 import dev.nokee.init.internal.ConsolePrinter;
-import dev.nokee.init.internal.NokeeVersionProvider;
+import dev.nokee.init.internal.versions.NokeeVersionProvider;
 import org.gradle.util.VersionNumber;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 
 public final class ShowVersionCommand implements Runnable {
     public static final String FLAG = "show-version";

@@ -1,6 +1,5 @@
 package dev.nokee.init.internal.wrapper;
 
-import dev.nokee.init.internal.NokeeVersionProvider;
 import dev.nokee.init.internal.accessors.DefaultSystemPropertyAccessor;
 import dev.nokee.init.internal.accessors.GradlePropertyAccessor;
 import dev.nokee.init.internal.versions.CompositeNokeeVersionProvider;
@@ -11,7 +10,6 @@ import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.Property;
-import org.gradle.api.provider.ProviderFactory;
 import org.gradle.api.tasks.wrapper.Wrapper;
 import org.gradle.util.VersionNumber;
 

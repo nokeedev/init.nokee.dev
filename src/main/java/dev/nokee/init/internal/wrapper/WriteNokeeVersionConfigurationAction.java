@@ -1,7 +1,7 @@
 package dev.nokee.init.internal.wrapper;
 
 import dev.nokee.init.internal.FileUtils;
-import dev.nokee.init.internal.NokeeVersionProvider;
+import dev.nokee.init.internal.versions.NokeeVersionProvider;
 import org.gradle.api.Action;
 import org.gradle.api.Task;
 import org.gradle.util.VersionNumber;

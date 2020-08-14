@@ -2,6 +2,9 @@ package dev.nokee.init;
 
 import dev.nokee.init.internal.*;
 import dev.nokee.init.internal.buildinit.RegisterNokeeBuildInitTemplateAction;
+import dev.nokee.init.internal.versions.DefaultGradleVersionProvider;
+import dev.nokee.init.internal.versions.DefaultNokeeVersionProviderFactory;
+import dev.nokee.init.internal.versions.GradleVersionProvider;
 import dev.nokee.init.internal.wrapper.OnlyWhenWrapperPluginIsAppliedAction;
 import dev.nokee.init.internal.wrapper.RegisterWrapperTaskConfigurationAction;
 import org.gradle.api.Plugin;

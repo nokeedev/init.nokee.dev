@@ -1,6 +1,5 @@
 package dev.nokee.init.internal.versions;
 
-import dev.nokee.init.internal.NokeeVersionProvider;
 import dev.nokee.init.internal.accessors.GradlePropertyAccessor;
 import org.gradle.util.VersionNumber;
 

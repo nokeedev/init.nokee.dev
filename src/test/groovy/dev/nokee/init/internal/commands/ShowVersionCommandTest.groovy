@@ -1,7 +1,7 @@
 package dev.nokee.init.internal.commands
 
 import dev.nokee.init.internal.DefaultConsolePrinter
-import dev.nokee.init.internal.NokeeVersionProvider
+import dev.nokee.init.internal.versions.NokeeVersionProvider
 import org.gradle.util.VersionNumber
 import spock.lang.Specification
 import spock.lang.Subject
