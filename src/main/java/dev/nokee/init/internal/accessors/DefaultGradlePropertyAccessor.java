@@ -15,6 +15,6 @@ public final class DefaultGradlePropertyAccessor implements GradlePropertyAccess
     @Nullable
     @Override
     public String get(String name) {
-        return Objects.toString(project.property(name), null);
+        return Objects.toString(project.findProperty(name), null);
     }
 }

@@ -12,7 +12,7 @@ class DefaultGradlePropertyAccessorTest extends Specification {
         def result = subject.get('missing')
 
         then:
-        1 * project.property('missing') >> null
+        1 * project.findProperty('missing') >> null
 
         and:
         result == null
@@ -26,7 +26,7 @@ class DefaultGradlePropertyAccessorTest extends Specification {
         def result = subject.get('existing')
 
         then:
-        1 * project.property('existing') >> object
+        1 * project.findProperty('existing') >> object
         1 * object.toString() >> 'foo'
 
         and:
