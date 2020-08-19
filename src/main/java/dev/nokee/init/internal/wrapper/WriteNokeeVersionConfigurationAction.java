@@ -44,7 +44,7 @@ public final class WriteNokeeVersionConfigurationAction implements Action<Task> 
             if (!content.contains("\"$APP_ARGS\"")) {
                 throw new IllegalStateException(String.format("Could not find patching hook inside script at '%s'.", bashScriptFile.getAbsolutePath()));
             }
-            content = content.replace("\"$APP_ARGS\"", "\"$APP_ARGS\" --init-script \"\\\"$APP_HOME/" + pathToInitScript + "\\\"\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString());
+            content = content.replace("\"$APP_ARGS\"", "--init-script \"\\\"$APP_HOME/" + pathToInitScript + "\\\"\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString() + " \"$APP_ARGS\"");
             FileUtils.write(bashScriptFile, content, Charset.defaultCharset());
         } catch (IOException e) {
             throw new UncheckedIOException(String.format("Could not patch wrapper script at '%s'.", bashScriptFile.getAbsolutePath()), e);
@@ -53,10 +53,16 @@ public final class WriteNokeeVersionConfigurationAction implements Action<Task> 
         File batchScriptFile = new File(scriptFile.get().getAbsolutePath() + ".bat");
         try {
             String content = FileUtils.readFileToString(batchScriptFile, Charset.defaultCharset());
+            // 6.5 and lower hook point
             if (!content.contains("%CMD_LINE_ARGS%")) {
-                throw new IllegalStateException(String.format("Could not find patching hook inside script at '%s'.", batchScriptFile.getAbsolutePath()));
+                // 6.6 and above hook point
+                if (!content.contains("%*")) {
+                    throw new IllegalStateException(String.format("Could not find patching hook inside script at '%s'.", batchScriptFile.getAbsolutePath()));
+                }
+                content = content.replace("%*", "--init-script \"%APP_HOME%\\" + pathToInitScript.replace('/', '\\') + "\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString() + " %*");
+            } else {
+                content = content.replace("%CMD_LINE_ARGS%", "--init-script \"%APP_HOME%\\" + pathToInitScript.replace('/', '\\') + "\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString() + " %CMD_LINE_ARGS%");
             }
-            content = content.replace("%CMD_LINE_ARGS%", "%CMD_LINE_ARGS% --init-script \"%APP_HOME%\\" + pathToInitScript.replace('/', '\\') + "\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString());
             FileUtils.write(batchScriptFile, content, Charset.defaultCharset());
         } catch (IOException e) {
             throw new UncheckedIOException(String.format("Could not patch wrapper script at '%s'.", batchScriptFile.getAbsolutePath()), e);
