@@ -223,7 +223,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
         file('.gradle/use-nokee-version.txt') << '0.3.0'
 
         when:
-        def process = [file('gradlew'), 'nokee', '--show-version'].execute(null, testDirectory)
+        def process = [file(OperatingSystem.current().getScriptName('gradlew')), 'nokee', '--show-version'].execute(null, testDirectory)
 
         then:
         process.waitFor() == 0
@@ -247,7 +247,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
         file('.gradle/use-nokee-version.txt') << '0.3.0'
 
         when:
-        def process = [file('gradlew'), 'nokee', '--show-version'].execute(environmentVariable('USE_NOKEE_VERSION', '0.4.0'), testDirectory)
+        def process = [file(OperatingSystem.current().getScriptName('gradlew')), 'nokee', '--show-version'].execute(environmentVariable('USE_NOKEE_VERSION', '0.4.0'), testDirectory)
 
         then:
         process.waitFor() == 0
@@ -271,7 +271,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
         file('.gradle/use-nokee-version.txt') << '0.3.0'
 
         when:
-        def process = [file('gradlew'), 'nokee', '--show-version', '-Duse-nokee-version=0.4.0'].execute(environmentVariable('USE_NOKEE_VERSION', '0.5.0'), testDirectory)
+        def process = [file(OperatingSystem.current().getScriptName('gradlew')), 'nokee', '--show-version', '-Duse-nokee-version=0.4.0'].execute(environmentVariable('USE_NOKEE_VERSION', '0.5.0'), testDirectory)
 
         then:
         process.waitFor() == 0
