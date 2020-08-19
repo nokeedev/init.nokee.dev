@@ -75,7 +75,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
     }
 
     @Unroll
-    def "can override nokee version via #displayNmae property"(displayName, flag) {
+    def "can override nokee version via #displayName property"(displayName, flag) {
         given:
         def initScript = file('nokee.init.gradle')
         initScript << configurePluginClasspathAsBuildScriptDependencies().replace('buildscript', 'initscript') << '''
