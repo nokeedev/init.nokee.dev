@@ -2,6 +2,7 @@ package dev.nokee.init.internal.commands
 
 import dev.nokee.init.internal.DefaultConsolePrinter
 import dev.nokee.init.internal.versions.NokeeVersionProvider
+import org.gradle.util.TextUtil
 import org.gradle.util.VersionNumber
 import spock.lang.Specification
 import spock.lang.Subject
@@ -20,7 +21,7 @@ class ShowVersionCommandTest extends Specification {
         subject.run()
 
         then:
-        outStream.toString() == '''Using Nokee 1.2.3-deadbeef
+        TextUtil.normaliseLineSeparators(outStream.toString()) == '''Using Nokee 1.2.3-deadbeef
 '''
     }
 
@@ -36,7 +37,7 @@ class ShowVersionCommandTest extends Specification {
         subject.run()
 
         then:
-        outStream.toString() == '''Nokee isn't configured for this project, please use ./gradlew nokee --use-version=<version>
+        TextUtil.normaliseLineSeparators(outStream.toString()) == '''Nokee isn't configured for this project, please use ./gradlew nokee --use-version=<version>
 '''
     }
 }

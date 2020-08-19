@@ -1,6 +1,7 @@
 package dev.nokee.init.internal.commands
 
 import dev.nokee.init.internal.DefaultConsolePrinter
+import org.gradle.util.TextUtil
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -16,7 +17,7 @@ class ShowCommandLineHelpCommandTest extends Specification {
         subject.run()
 
         then:
-        outStream.toString() == '''
+        TextUtil.normaliseLineSeparators(outStream.toString()) == '''
 USAGE: gradlew nokee [option...]
 
 --show-help\t\t\tShows help message.
