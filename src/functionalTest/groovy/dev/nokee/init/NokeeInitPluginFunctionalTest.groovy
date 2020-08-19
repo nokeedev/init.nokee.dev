@@ -113,7 +113,6 @@ class NokeeInitPluginFunctionalTest extends AbstractGradleSpecification {
 
     def "can execute build init"() {
         given:
-        println testDirectory
         executer = executer.ignoresMissingSettingsFile()
         def initScript = file('nokee.init.gradle')
         initScript << configurePluginClasspathAsBuildScriptDependencies().replace('buildscript', 'initscript') << '''
