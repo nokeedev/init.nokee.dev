@@ -13,6 +13,9 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.function.Supplier;
 
+import static dev.nokee.init.internal.utils.FilenameUtils.separatorsToUnix;
+import static dev.nokee.init.internal.utils.FilenameUtils.separatorsToWindows;
+
 public final class WriteNokeeVersionConfigurationAction implements Action<Task> {
     private final NokeeVersionProvider nokeeVersionProvider;
     private final Supplier<File> propertiesFile;
@@ -44,7 +47,7 @@ public final class WriteNokeeVersionConfigurationAction implements Action<Task> 
             if (!content.contains("\"$APP_ARGS\"")) {
                 throw new IllegalStateException(String.format("Could not find patching hook inside script at '%s'.", bashScriptFile.getAbsolutePath()));
             }
-            content = content.replace("\"$APP_ARGS\"", "--init-script \"\\\"$APP_HOME/" + pathToInitScript + "\\\"\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString() + " \"$APP_ARGS\"");
+            content = content.replace("\"$APP_ARGS\"", "--init-script \"\\\"$APP_HOME/" + separatorsToUnix(pathToInitScript) + "\\\"\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString() + " \"$APP_ARGS\"");
             FileUtils.write(bashScriptFile, content, Charset.defaultCharset());
         } catch (IOException e) {
             throw new UncheckedIOException(String.format("Could not patch wrapper script at '%s'.", bashScriptFile.getAbsolutePath()), e);
@@ -59,9 +62,9 @@ public final class WriteNokeeVersionConfigurationAction implements Action<Task> 
                 if (!content.contains("%*")) {
                     throw new IllegalStateException(String.format("Could not find patching hook inside script at '%s'.", batchScriptFile.getAbsolutePath()));
                 }
-                content = content.replace("%*", "--init-script \"%APP_HOME%\\" + pathToInitScript.replace('/', '\\') + "\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString() + " %*");
+                content = content.replace("%*", "--init-script \"%APP_HOME%\\" + separatorsToWindows(pathToInitScript) + "\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString() + " %*");
             } else {
-                content = content.replace("%CMD_LINE_ARGS%", "--init-script \"%APP_HOME%\\" + pathToInitScript.replace('/', '\\') + "\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString() + " %CMD_LINE_ARGS%");
+                content = content.replace("%CMD_LINE_ARGS%", "--init-script \"%APP_HOME%\\" + separatorsToWindows(pathToInitScript) + "\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString() + " %CMD_LINE_ARGS%");
             }
             FileUtils.write(batchScriptFile, content, Charset.defaultCharset());
         } catch (IOException e) {
