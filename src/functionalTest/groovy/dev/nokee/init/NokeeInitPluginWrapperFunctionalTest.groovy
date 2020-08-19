@@ -2,6 +2,7 @@ package dev.nokee.init
 
 import dev.gradleplugins.integtests.fixtures.AbstractGradleSpecification
 import dev.gradleplugins.test.fixtures.file.TestFile
+import org.gradle.util.TextUtil
 import spock.lang.Unroll
 
 class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
@@ -288,7 +289,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
 
     private static void assertNokeeInitScript(File initScriptFile) {
         assert initScriptFile.exists()
-        assert initScriptFile.text == '''initscript {
+        assert TextUtil.normaliseLineSeparators(initScriptFile.text) == '''initscript {
             |    repositories {
             |        maven { url = 'https://dl.bintray.com/nokeedev/distributions-initialization' }
             |        mavenLocal {
