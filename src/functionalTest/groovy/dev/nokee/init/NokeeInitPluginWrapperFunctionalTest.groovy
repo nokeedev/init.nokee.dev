@@ -2,6 +2,7 @@ package dev.nokee.init
 
 import dev.gradleplugins.integtests.fixtures.AbstractGradleSpecification
 import dev.gradleplugins.test.fixtures.file.TestFile
+import org.gradle.internal.os.OperatingSystem
 import org.gradle.util.TextUtil
 import spock.lang.Unroll
 
@@ -158,7 +159,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
         succeeds('wrapper')
 
         when:
-        def process = [file('dummy/gradlew'), 'nokee', '--show-version'].execute(null, testDirectory)
+        def process = [file(OperatingSystem.current().getScriptName('dummy/gradlew')), 'nokee', '--show-version'].execute(null, testDirectory)
 
         then:
         process.waitFor() == 0
@@ -179,7 +180,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
         succeeds('wrapper', '-Duse-nokee-version=0.4.0')
 
         when:
-        def process = [file('gradlew'), 'nokee', '--show-version'].execute(null, testDirectory)
+        def process = [file(OperatingSystem.current().getScriptName('gradlew')), 'nokee', '--show-version'].execute(null, testDirectory)
 
         then:
         process.waitFor() == 0
