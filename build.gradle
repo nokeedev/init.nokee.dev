@@ -46,6 +46,11 @@ functionalTest {
         implementation groovy()
         implementation gradleFixtures()
     }
+    testTasks.configureEach { task ->
+        if (task.name == 'functionalTestMinimumGradle') {
+            task.enabled = (JavaVersion.current().majorVersion != '14')
+        }
+    }
 }
 
 publishing {
