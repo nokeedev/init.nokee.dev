@@ -19,7 +19,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
         then:
         !wrapperProperties.containsKey('useNokeeVersion')
         file('gradle').assertHasDescendants('wrapper/gradle-wrapper.properties', 'wrapper/gradle-wrapper.jar')
-        !callsNokeeInitScriptFromWrapperScripts(testDirectory)
+        !passesNokeeInitScriptFromWrapperScripts(testDirectory)
         !passesNokeeVersionFromWrapperScripts(testDirectory, '0.4.0')
     }
 
@@ -39,7 +39,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
         wrapperProperties.get('useNokeeVersion') == '0.4.0'
         file('gradle').assertHasDescendants('nokee.init.gradle', 'wrapper/gradle-wrapper.properties', 'wrapper/gradle-wrapper.jar')
         assertNokeeInitScript(file('gradle/nokee.init.gradle'))
-        callsNokeeInitScriptFromWrapperScripts(testDirectory)
+        passesNokeeInitScriptFromWrapperScripts(testDirectory)
         passesNokeeVersionFromWrapperScripts(testDirectory, '0.4.0')
 
         where:
@@ -70,7 +70,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
         wrapperProperties.get('useNokeeVersion') == '0.5.0'
         file('gradle').assertHasDescendants('nokee.init.gradle', 'wrapper/gradle-wrapper.properties', 'wrapper/gradle-wrapper.jar')
         assertNokeeInitScript(file('gradle/nokee.init.gradle'))
-        callsNokeeInitScriptFromWrapperScripts(testDirectory)
+        passesNokeeInitScriptFromWrapperScripts(testDirectory)
         passesNokeeVersionFromWrapperScripts(testDirectory, '0.5.0')
     }
 
@@ -97,7 +97,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
         wrapperProperties.get('useNokeeVersion') == '0.4.0'
         file('gradle').assertHasDescendants('nokee.init.gradle', 'wrapper/gradle-wrapper.properties', 'wrapper/gradle-wrapper.jar')
         assertNokeeInitScript(file('gradle/nokee.init.gradle'))
-        callsNokeeInitScriptFromWrapperScripts(testDirectory)
+        passesNokeeInitScriptFromWrapperScripts(testDirectory)
         passesNokeeVersionFromWrapperScripts(testDirectory, '0.4.0')
 
         where:
@@ -131,7 +131,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
         getWrapperProperties('dummy/wrapper.properties').get('useNokeeVersion') == '0.4.0'
         file('dummy').assertHasDescendants('init.gradle', 'wrapper.properties', 'wrapper.jar', 'gradlew', 'gradlew.bat')
         assertNokeeInitScript(file('dummy/init.gradle'))
-        callsNokeeInitScriptFromWrapperScripts(file('dummy'), 'init.gradle')
+        passesNokeeInitScriptFromWrapperScripts(file('dummy'), 'init.gradle')
         passesNokeeVersionFromWrapperScripts(file('dummy'), '0.4.0')
     }
 
@@ -305,7 +305,7 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
             |'''.stripMargin()
     }
 
-    private static boolean callsNokeeInitScriptFromWrapperScripts(TestFile wrapperBaseDirectory, String pathToInitScript = 'gradle/nokee.init.gradle') {
+    private static boolean passesNokeeInitScriptFromWrapperScripts(TestFile wrapperBaseDirectory, String pathToInitScript = 'gradle/nokee.init.gradle') {
         return wrapperBaseDirectory.file('gradlew').assertIsFile().text.contains("--init-script \"\\\"\$APP_HOME/${pathToInitScript}\\\"\"") && wrapperBaseDirectory.file('gradlew.bat').assertIsFile().text.contains("--init-script \"%APP_HOME%\\${pathToInitScript.replace('/', '\\')}\"")
     }
 
