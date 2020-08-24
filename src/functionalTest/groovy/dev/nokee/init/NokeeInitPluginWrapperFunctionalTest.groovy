@@ -208,6 +208,51 @@ class NokeeInitPluginWrapperFunctionalTest extends AbstractGradleSpecification {
         result.assertOutputContains('Using Nokee 0.4.0')
     }
 
+    def "keeps the nokee enable wrapper even if use-nokee-version property isn't used"() {
+        given:
+        def initScript = file('nokee.init.gradle')
+        initScript << configurePluginClasspathAsBuildScriptDependencies().replace('buildscript', 'initscript') << '''
+            apply plugin: dev.nokee.init.NokeeInitPlugin
+        '''
+        usingInitScript(initScript)
+
+        and:
+        succeeds('wrapper', '-Duse-nokee-version=0.4.0')
+        assert wrapperProperties.get('useNokeeVersion') == '0.4.0'
+
+        when:
+        succeeds('wrapper', '--gradle-version=6.5.1')
+
+        then:
+        wrapperProperties.get('useNokeeVersion') == '0.4.0'
+        file('gradle').assertHasDescendants('nokee.init.gradle', 'wrapper/gradle-wrapper.properties', 'wrapper/gradle-wrapper.jar')
+        assertNokeeInitScript(file('gradle/nokee.init.gradle'))
+        passesNokeeInitScriptFromWrapperScripts(testDirectory)
+        passesNokeeVersionFromWrapperScripts(testDirectory, '0.4.0')
+    }
+
+    def "registers use-nokee-version gradle and system property as wrapper input properties"() {
+        given:
+        def initScript = file('nokee.init.gradle')
+        initScript << configurePluginClasspathAsBuildScriptDependencies().replace('buildscript', 'initscript') << '''
+            apply plugin: dev.nokee.init.NokeeInitPlugin
+        '''
+        usingInitScript(initScript)
+
+        and:
+        succeeds('wrapper', '-Duse-nokee-version=0.3.0')
+
+        when:
+        succeeds('wrapper', '-Duse-nokee-version=0.4.0')
+
+        then:
+        wrapperProperties.get('useNokeeVersion') == '0.4.0'
+        file('gradle').assertHasDescendants('nokee.init.gradle', 'wrapper/gradle-wrapper.properties', 'wrapper/gradle-wrapper.jar')
+        assertNokeeInitScript(file('gradle/nokee.init.gradle'))
+        passesNokeeInitScriptFromWrapperScripts(testDirectory)
+        passesNokeeVersionFromWrapperScripts(testDirectory, '0.4.0')
+    }
+
     def "prefers use-nokee-version file over useNokeeVersionFromWrapper System property"() {
         given:
         def initScript = file('nokee.init.gradle')

@@ -9,6 +9,7 @@ import org.gradle.util.VersionNumber;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.function.Supplier;
@@ -77,7 +78,7 @@ public final class WriteNokeeVersionConfigurationAction implements Action<Task> 
         Objects.requireNonNull(inStream, "Could not find the Nokee init script inside the classpath.");
 
         try {
-            Files.copy(inStream, initScriptFile.get().toPath());
+            Files.copy(inStream, initScriptFile.get().toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new UncheckedIOException(String.format("Could not write Nokee init script file at '%s'.", initScriptFile.get().getAbsolutePath()), e);
         } finally {

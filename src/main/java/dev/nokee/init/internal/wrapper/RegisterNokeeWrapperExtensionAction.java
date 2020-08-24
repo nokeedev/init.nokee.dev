@@ -2,9 +2,7 @@ package dev.nokee.init.internal.wrapper;
 
 import dev.nokee.init.internal.accessors.DefaultSystemPropertyAccessor;
 import dev.nokee.init.internal.accessors.GradlePropertyAccessor;
-import dev.nokee.init.internal.versions.CompositeNokeeVersionProvider;
-import dev.nokee.init.internal.versions.DefaultGradlePropertyNokeeVersionProvider;
-import dev.nokee.init.internal.versions.DefaultSystemPropertyNokeeVersionProvider;
+import dev.nokee.init.internal.versions.*;
 import org.gradle.api.Action;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.file.RegularFileProperty;
@@ -14,6 +12,7 @@ import org.gradle.api.tasks.wrapper.Wrapper;
 import org.gradle.util.VersionNumber;
 
 import java.util.Optional;
+import java.util.concurrent.Callable;
 
 public final class RegisterNokeeWrapperExtensionAction implements Action<Wrapper> {
     private final ObjectFactory objects;
@@ -32,7 +31,9 @@ public final class RegisterNokeeWrapperExtensionAction implements Action<Wrapper
         RegularFileProperty nokeeInitScriptFile = objects.fileProperty().convention(layout.getProjectDirectory().file("gradle/nokee.init.gradle"));
         task.getExtensions().add("nokeeVersion", nokeeVersion);
         task.getExtensions().add("nokeeInitScriptFile", nokeeInitScriptFile);
-        task.doLast(new WriteNokeeVersionConfigurationAction(new CompositeNokeeVersionProvider(new DefaultSystemPropertyNokeeVersionProvider(DefaultSystemPropertyAccessor.INSTANCE), new DefaultGradlePropertyNokeeVersionProvider(gradlePropertyAccessor), () -> Optional.ofNullable(nokeeVersion.getOrNull()).map(VersionNumber::parse)), task::getPropertiesFile, nokeeInitScriptFile.getAsFile()::get, task::getScriptFile));
+        NokeeVersionProvider nokeeVersionProvider = new CompositeNokeeVersionProvider(new DefaultSystemPropertyNokeeVersionProvider(DefaultSystemPropertyAccessor.INSTANCE), new DefaultGradlePropertyNokeeVersionProvider(gradlePropertyAccessor), () -> Optional.ofNullable(nokeeVersion.getOrNull()).map(VersionNumber::parse), new WrapperPropertiesNokeeVersionProviderImpl(task.getPropertiesFile()));
+        task.getInputs().property("useNokeeVersion", (Callable<String>)() -> nokeeVersionProvider.get().map(VersionNumber::toString).orElse(null)).optional(true);
+        task.doLast(new WriteNokeeVersionConfigurationAction(nokeeVersionProvider, task::getPropertiesFile, nokeeInitScriptFile.getAsFile()::get, task::getScriptFile));
     }
 
 
