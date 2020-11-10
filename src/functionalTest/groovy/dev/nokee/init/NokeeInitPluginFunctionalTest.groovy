@@ -1,6 +1,13 @@
 package dev.nokee.init
 
 import dev.gradleplugins.integtests.fixtures.AbstractGradleSpecification
+import dev.gradleplugins.runnerkit.GradleExecutor
+import dev.gradleplugins.runnerkit.GradleRunner
+import dev.gradleplugins.runnerkit.GradleWrapperFixture
+import spock.lang.Ignore
+
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 
 class NokeeInitPluginFunctionalTest extends AbstractGradleSpecification {
     def "can use init script via command line"() {
@@ -122,5 +129,30 @@ class NokeeInitPluginFunctionalTest extends AbstractGradleSpecification {
 
         expect:
         succeeds('init', '--type', 'nokee-cpp-application', '--dsl', 'groovy')
+    }
+
+    // TODO: Move to initscript testing
+    def "well-behaved plugin with dependency verification enabled"() {
+        given:
+        def initScript = file('nokee.init.gradle')
+        writeInitScript(initScript)
+        executer = executer.usingInitScript(initScript).requireOwnGradleUserHomeDirectory()
+        file('gradle/verification-metadata.xml') << '''<?xml version="1.0" encoding="UTF-8"?>
+<verification-metadata>
+   <configuration>
+      <verify-metadata>false</verify-metadata>
+      <verify-signatures>true</verify-signatures>
+    </configuration>
+</verification-metadata>
+'''
+        file('gradle.properties') << '''org.gradle.dependency.verification=strict
+'''
+
+        expect:
+        succeeds('tasks')
+    }
+
+    void writeInitScript(File initscript) {
+        Files.copy(NokeeInitPluginFunctionalTest.class.getResourceAsStream("/dev/nokee/init/internal/wrapper/nokee.init.gradle"), initscript.toPath(), StandardCopyOption.REPLACE_EXISTING)
     }
 }
