@@ -18,21 +18,20 @@ class RegisterNokeeWrapperExtensionActionTest extends Specification {
 
     def "registers nokee wrapper extensions"() {
         given:
-        def extensions = Mock(ExtensionContainer)
-        def wrapper = Mock(Wrapper) {
-            getExtensions() >> extensions
-        }
+        def wrapper = project.tasks.create('wrapper', Wrapper)
 
         when:
         subject.execute(wrapper)
 
         then:
-        1 * extensions.add('nokeeVersion', _ as Property) >> { args ->
-            assert args[1].orNull == null
-        }
-        1 * extensions.add('nokeeInitScriptFile', _ as RegularFileProperty) >> { args ->
-            assert separatorsToUnix(args[1].get().asFile.absolutePath) == "${project.projectDir}/gradle/nokee.init.gradle"
-        }
-        1 * wrapper.doLast(_ as WriteNokeeVersionConfigurationAction)
+        wrapper.extensions.nokeeVersion instanceof Property
+        wrapper.extensions.nokeeVersion.orNull == null
+
+        and:
+        wrapper.extensions.nokeeInitScriptFile instanceof RegularFileProperty
+        separatorsToUnix(wrapper.extensions.nokeeInitScriptFile.get().asFile.absolutePath) == "${project.projectDir}/gradle/nokee.init.gradle"
+
+        and:
+        wrapper.actions.size() == 2 // includes Nokee patcher
     }
 }
