@@ -46,7 +46,10 @@ functionalTest {
         implementation groovy()
         implementation gradleFixtures()
     }
-    testTasks.configureEach { task ->
+    testTasks.configureEach { Test task ->
+        task.dependsOn('publishAllPublicationsToStagingRepository')
+        task.systemProperty('dev.nokee.init.staging-repository-path', layout.buildDirectory.dir('repositories/staging').get().asFile.absolutePath)
+
         if (task.name == 'functionalTestMinimumGradle') {
             task.enabled = (JavaVersion.current().majorVersion != '14')
         }
@@ -56,6 +59,7 @@ functionalTest {
 publishing {
     repositories {
         maven {
+            name = 'Bintray'
             url = 'https://dl.bintray.com/nokeedev/distributions-initialization'
             ext.packageName = 'dev.nokee.init'
             credentials {
@@ -63,5 +67,13 @@ publishing {
                 password = System.getProperty('dev.nokee.env.BINTRAY_KEY')
             }
         }
+        maven {
+            name = 'Staging'
+            url = layout.buildDirectory.dir('repositories/staging')
+        }
     }
+}
+
+tasks.register('release') {
+    dependsOn('publishAllPublicationsToBintrayRepository')
 }
