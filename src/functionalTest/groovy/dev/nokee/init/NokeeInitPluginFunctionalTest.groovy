@@ -23,7 +23,7 @@ class NokeeInitPluginFunctionalTest extends AbstractGradleSpecification {
 
     def "can use init script inside Gradle user home"() {
         given:
-        executer = executer.requireIsolatedDaemons().withGradleUserHomeDirectory(testDirectory)
+        executer = executer./*requireIsolatedDaemons().*/withGradleUserHomeDirectory(testDirectory)
         def initScript = file('init.d/nokee.init.gradle')
         initScript << configurePluginClasspathAsBuildScriptDependencies().replace('buildscript', 'initscript') << '''
             apply plugin: dev.nokee.init.NokeeInitPlugin
