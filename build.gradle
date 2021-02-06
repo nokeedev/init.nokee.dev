@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'dev.nokee.init'
-version = '0.6.0'
+version = '0.7.0'
 
 tasks.named('processResources', ProcessResources) { task ->
     task.from(file('nokee.init.gradle')) {
@@ -39,22 +39,41 @@ test {
     }
 }
 
+def lombokVersion = '1.18.12'
+def mockitoVersion = '3.6.0'
+def junitVersion = '5.7.0'
 functionalTest {
     testingStrategies = [strategies.coverageForMinimumVersion, strategies.coverageForLatestGlobalAvailableVersion, strategies.coverageForLatestNightlyVersion]
     dependencies {
         implementation spockFramework()
         implementation groovy()
         implementation gradleFixtures()
+
+        implementation "commons-io:commons-io:2.8.0"
+
+        // Lombok
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+        // JUnit 5
+        implementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+        runtimeOnly "org.junit.vintage:junit-vintage-engine:${junitVersion}"
+
+        // Mockito
+        implementation "org.mockito:mockito-core:${mockitoVersion}"
     }
     testTasks.configureEach { Test task ->
         task.dependsOn('publishAllPublicationsToStagingRepository')
         task.systemProperty('dev.nokee.init.staging-repository-path', layout.buildDirectory.dir('repositories/staging').get().asFile.absolutePath)
+        task.systemProperty('dev.nokee.init.gold-nokee-init-script', file('nokee.init.gradle').absolutePath)
 
         if (task.name == 'functionalTestMinimumGradle') {
             task.enabled = (JavaVersion.current().majorVersion != '14')
         }
     }
 }
+
+tasks.withType(Test).configureEach { it.useJUnitPlatform() }
 
 publishing {
     repositories {
