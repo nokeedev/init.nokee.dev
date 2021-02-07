@@ -2,12 +2,14 @@ package dev.nokee.init.internal.wrapper;
 
 import dev.nokee.init.internal.utils.FileUtils;
 import dev.nokee.init.internal.versions.NokeeVersionProvider;
+import lombok.val;
 import org.gradle.api.Action;
 import org.gradle.api.Task;
 import org.gradle.util.VersionNumber;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
@@ -43,36 +45,26 @@ public final class WriteNokeeVersionConfigurationAction implements Action<Task> 
         String pathToInitScript = scriptFile.get().getParentFile().toPath().relativize(initScriptFile.get().toPath()).toString();
 
         File bashScriptFile = scriptFile.get();
-        try {
-            String content = FileUtils.readFileToString(bashScriptFile, Charset.defaultCharset());
-            if (!content.contains("\"$APP_ARGS\"")) {
-                throw new IllegalStateException(String.format("Could not find patching hook inside script at '%s'.", bashScriptFile.getAbsolutePath()));
+        try (val reader = new GradleWrapperScriptReader(new FileInputStream(bashScriptFile))) {
+            val script = reader.read().patch(pathToInitScript);
+            try (val writer = new GradleWrapperScriptWriter(new FileOutputStream(bashScriptFile))) {
+                writer.write(script);
             }
-            content = content.replace("\"$APP_ARGS\"", "--init-script \"\\\"$APP_HOME/" + separatorsToUnix(pathToInitScript) + "\\\"\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString() + " \"$APP_ARGS\"");
-            FileUtils.write(bashScriptFile, content, Charset.defaultCharset());
         } catch (IOException e) {
             throw new UncheckedIOException(String.format("Could not patch wrapper script at '%s'.", bashScriptFile.getAbsolutePath()), e);
         }
 
         File batchScriptFile = new File(scriptFile.get().getAbsolutePath() + ".bat");
-        try {
-            String content = FileUtils.readFileToString(batchScriptFile, Charset.defaultCharset());
-            // 6.5 and lower hook point
-            if (!content.contains("%CMD_LINE_ARGS%")) {
-                // 6.6 and above hook point
-                if (!content.contains("%*")) {
-                    throw new IllegalStateException(String.format("Could not find patching hook inside script at '%s'.", batchScriptFile.getAbsolutePath()));
-                }
-                content = content.replace("%*", "--init-script \"%APP_HOME%\\" + separatorsToWindows(pathToInitScript) + "\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString() + " %*");
-            } else {
-                content = content.replace("%CMD_LINE_ARGS%", "--init-script \"%APP_HOME%\\" + separatorsToWindows(pathToInitScript) + "\" -DuseNokeeVersionFromWrapper=" + nokeeVersion.toString() + " %CMD_LINE_ARGS%");
+        try (val reader = new GradleWrapperScriptReader(new FileInputStream(batchScriptFile))) {
+            val script = reader.read().patch(pathToInitScript);
+            try (val writer = new GradleWrapperScriptWriter(new FileOutputStream(batchScriptFile))) {
+                writer.write(script);
             }
-            FileUtils.write(batchScriptFile, content, Charset.defaultCharset());
         } catch (IOException e) {
             throw new UncheckedIOException(String.format("Could not patch wrapper script at '%s'.", batchScriptFile.getAbsolutePath()), e);
         }
     }
-    
+
     private void writeInitScriptFile() {
         InputStream inStream = this.getClass().getResourceAsStream("nokee.init.gradle");
         Objects.requireNonNull(inStream, "Could not find the Nokee init script inside the classpath.");
