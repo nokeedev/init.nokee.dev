@@ -10,18 +10,18 @@ import java.util.Optional;
 import java.util.Properties;
 
 public final class WrapperPropertiesNokeeVersionProviderImpl implements NokeeVersionProvider {
-    private final Properties properties = new Properties();
+	private final Properties properties = new Properties();
 
-    public WrapperPropertiesNokeeVersionProviderImpl(File wrapperProperties) {
-        try (InputStream inStream = new FileInputStream(wrapperProperties)) {
-            properties.load(inStream);
-        } catch (IOException e) {
-            // Do nothing...
-        }
-    }
+	public WrapperPropertiesNokeeVersionProviderImpl(File wrapperProperties) {
+		try (InputStream inStream = new FileInputStream(wrapperProperties)) {
+			properties.load(inStream);
+		} catch (IOException e) {
+			// Do nothing...
+		}
+	}
 
-    @Override
-    public Optional<VersionNumber> get() {
-        return Optional.ofNullable(properties.getProperty("useNokeeVersion")).map(VersionNumber::parse);
-    }
+	@Override
+	public Optional<VersionNumber> get() {
+		return Optional.ofNullable(properties.getProperty("useNokeeVersion")).map(VersionNumber::parse);
+	}
 }

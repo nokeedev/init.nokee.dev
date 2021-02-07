@@ -4,29 +4,29 @@ import dev.nokee.init.internal.accessors.SystemPropertyAccessor
 import spock.lang.Specification
 
 class WrapperSystemPropertyNokeeVersionProviderTest extends Specification {
-    def accessor = Mock(SystemPropertyAccessor)
-    def subject = new WrapperSystemPropertyNokeeVersionProvider(accessor)
+	def accessor = Mock(SystemPropertyAccessor)
+	def subject = new WrapperSystemPropertyNokeeVersionProvider(accessor)
 
-    def "returns value from system property if available"() {
-        when:
-        def result = subject.get()
+	def "returns value from system property if available"() {
+		when:
+		def result = subject.get()
 
-        then:
-        1 * accessor.get('useNokeeVersionFromWrapper') >> '0.4.0'
+		then:
+		1 * accessor.get('useNokeeVersionFromWrapper') >> '0.4.0'
 
-        and:
-        result.present
-        result.get().toString() == '0.4.0'
-    }
+		and:
+		result.present
+		result.get().toString() == '0.4.0'
+	}
 
-    def "returns empty when system property is absent"() {
-        when:
-        def result = subject.get()
+	def "returns empty when system property is absent"() {
+		when:
+		def result = subject.get()
 
-        then:
-        1 * accessor.get('useNokeeVersionFromWrapper') >> null
+		then:
+		1 * accessor.get('useNokeeVersionFromWrapper') >> null
 
-        and:
-        !result.present
-    }
+		and:
+		!result.present
+	}
 }

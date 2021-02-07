@@ -26,29 +26,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NokeeGradleWrapperIntegrationFunctionalTest {
-    @TempDir
-    Path testDirectory;
+	@TempDir
+	Path testDirectory;
 
-    private void succeeds(String... args) throws IOException {
-        val initScriptFile = testDirectory.resolve("init.gradle").toFile();
-        FileUtils.write(initScriptFile, configurePluginClasspathAsInitScriptDependencies(), UTF_8);
-        FileUtils.write(initScriptFile, "\napply plugin: dev.nokee.init.NokeeInitPlugin\n", UTF_8, true);
-        GradleRunner.create(GradleExecutor.gradleTestKit()).inDirectory(testDirectory.toFile()).withArguments(args).usingInitScript(initScriptFile).build();
-    }
+	private void succeeds(String... args) throws IOException {
+		val initScriptFile = testDirectory.resolve("init.gradle").toFile();
+		FileUtils.write(initScriptFile, configurePluginClasspathAsInitScriptDependencies(), UTF_8);
+		FileUtils.write(initScriptFile, "\napply plugin: dev.nokee.init.NokeeInitPlugin\n", UTF_8, true);
+		GradleRunner.create(GradleExecutor.gradleTestKit()).inDirectory(testDirectory.toFile()).withArguments(args).usingInitScript(initScriptFile).build();
+	}
 
-    private static File getGoldNokeeInitScriptFile() {
-        return new File(System.getProperty("dev.nokee.init.gold-nokee-init-script"));
-    }
+	private static File getGoldNokeeInitScriptFile() {
+		return new File(System.getProperty("dev.nokee.init.gold-nokee-init-script"));
+	}
 
-    @Test
-    void generateGradleWrapper() throws IOException {
-        succeeds("wrapper", "-Dnokee-version=0.4.0");
-        wroteNokeeInitScript();
-    }
+	@Test
+	void generateGradleWrapper() throws IOException {
+		succeeds("wrapper", "-Dnokee-version=0.4.0");
+		wroteNokeeInitScript();
+	}
 
-    private void wroteNokeeInitScript() throws IOException {
-        val initScriptFile = testDirectory.resolve("gradle/nokee.init.gradle").toFile();
-        assertThat("gradle/nokee.init.gradle should exists", initScriptFile, FileMatchers.anExistingFile());
-        assertEquals(readLines(initScriptFile, UTF_8), readLines(getGoldNokeeInitScriptFile(), UTF_8), "gradle/nokee.init.gradle should be the same as the gold init script");
-    }
+	private void wroteNokeeInitScript() throws IOException {
+		val initScriptFile = testDirectory.resolve("gradle/nokee.init.gradle").toFile();
+		assertThat("gradle/nokee.init.gradle should exists", initScriptFile, FileMatchers.anExistingFile());
+		assertEquals(readLines(initScriptFile, UTF_8), readLines(getGoldNokeeInitScriptFile(), UTF_8), "gradle/nokee.init.gradle should be the same as the gold init script");
+	}
 }

@@ -9,14 +9,14 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public final class DefaultNokeeVersionProvider implements NokeeVersionProvider {
-    private final NokeeVersionProvider delegate;
+	private final NokeeVersionProvider delegate;
 
-    public DefaultNokeeVersionProvider(Supplier<File> projectDirectory, SystemPropertyAccessor systemPropertyAccessor, EnvironmentVariableAccessor environmentVariableAccessor) {
-        this.delegate = new CompositeNokeeVersionProvider(new DefaultSystemPropertyNokeeVersionProvider(systemPropertyAccessor), new EnvironmentVariableNokeeVersionProvider(environmentVariableAccessor), new CacheFileNokeeVersionProvider(projectDirectory), new WrapperSystemPropertyNokeeVersionProvider(systemPropertyAccessor), new NonRelocatedWrapperPropertiesNokeeVersionProvider(projectDirectory));
-    }
+	public DefaultNokeeVersionProvider(Supplier<File> projectDirectory, SystemPropertyAccessor systemPropertyAccessor, EnvironmentVariableAccessor environmentVariableAccessor) {
+		this.delegate = new CompositeNokeeVersionProvider(new DefaultSystemPropertyNokeeVersionProvider(systemPropertyAccessor), new EnvironmentVariableNokeeVersionProvider(environmentVariableAccessor), new CacheFileNokeeVersionProvider(projectDirectory), new WrapperSystemPropertyNokeeVersionProvider(systemPropertyAccessor), new NonRelocatedWrapperPropertiesNokeeVersionProvider(projectDirectory));
+	}
 
-    @Override
-    public Optional<VersionNumber> get() {
-        return delegate.get();
-    }
+	@Override
+	public Optional<VersionNumber> get() {
+		return delegate.get();
+	}
 }

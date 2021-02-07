@@ -13,25 +13,25 @@ import static dev.nokee.init.internal.utils.FilenameUtils.separatorsToUnix
 
 @Subject(RegisterNokeeWrapperExtensionAction)
 class RegisterNokeeWrapperExtensionActionTest extends Specification {
-    def project = ProjectBuilder.builder().build()
-    def subject = new RegisterNokeeWrapperExtensionAction(project.objects, project.layout, Mock(GradlePropertyAccessor))
+	def project = ProjectBuilder.builder().build()
+	def subject = new RegisterNokeeWrapperExtensionAction(project.objects, project.layout, Mock(GradlePropertyAccessor))
 
-    def "registers nokee wrapper extensions"() {
-        given:
-        def wrapper = project.tasks.create('wrapper', Wrapper)
+	def "registers nokee wrapper extensions"() {
+		given:
+		def wrapper = project.tasks.create('wrapper', Wrapper)
 
-        when:
-        subject.execute(wrapper)
+		when:
+		subject.execute(wrapper)
 
-        then:
-        wrapper.extensions.nokeeVersion instanceof Property
-        wrapper.extensions.nokeeVersion.orNull == null
+		then:
+		wrapper.extensions.nokeeVersion instanceof Property
+		wrapper.extensions.nokeeVersion.orNull == null
 
-        and:
-        wrapper.extensions.nokeeInitScriptFile instanceof RegularFileProperty
-        separatorsToUnix(wrapper.extensions.nokeeInitScriptFile.get().asFile.absolutePath) == "${project.projectDir}/gradle/nokee.init.gradle"
+		and:
+		wrapper.extensions.nokeeInitScriptFile instanceof RegularFileProperty
+		separatorsToUnix(wrapper.extensions.nokeeInitScriptFile.get().asFile.absolutePath) == "${project.projectDir}/gradle/nokee.init.gradle"
 
-        and:
-        wrapper.actions.size() == 2 // includes Nokee patcher
-    }
+		and:
+		wrapper.actions.size() == 2 // includes Nokee patcher
+	}
 }

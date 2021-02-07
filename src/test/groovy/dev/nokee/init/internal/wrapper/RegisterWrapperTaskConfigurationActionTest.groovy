@@ -8,19 +8,19 @@ import spock.lang.Subject
 
 @Subject(RegisterWrapperTaskConfigurationAction)
 class RegisterWrapperTaskConfigurationActionTest extends Specification {
-    def subject = new RegisterWrapperTaskConfigurationAction()
+	def subject = new RegisterWrapperTaskConfigurationAction()
 
-    def "register configuration action for wrapper task"() {
-        given:
-        def taskContainer = Mock(TaskContainer)
-        def project = Mock(Project) {
-            getTasks() >> taskContainer
-        }
+	def "register configuration action for wrapper task"() {
+		given:
+		def taskContainer = Mock(TaskContainer)
+		def project = Mock(Project) {
+			getTasks() >> taskContainer
+		}
 
-        when:
-        subject.execute(project)
+		when:
+		subject.execute(project)
 
-        then:
-        1 * taskContainer.named('wrapper', Wrapper, _ as RegisterNokeeWrapperExtensionAction)
-    }
+		then:
+		1 * taskContainer.named('wrapper', Wrapper, _ as RegisterNokeeWrapperExtensionAction)
+	}
 }

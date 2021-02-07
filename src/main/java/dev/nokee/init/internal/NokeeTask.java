@@ -18,42 +18,42 @@ import javax.inject.Inject;
 import java.util.stream.Stream;
 
 public abstract class NokeeTask extends DefaultTask {
-       @Inject
-       public NokeeTask() {
-              // Show help if task executes without option
-              getShowHelp().convention(getProviders().provider(() -> Stream.of(getShowVersion().orElse(false), getNokeeVersion().map(it -> true).orElse(false)).allMatch(it -> !it.get())));
-       }
+	@Inject
+	public NokeeTask() {
+		// Show help if task executes without option
+		getShowHelp().convention(getProviders().provider(() -> Stream.of(getShowVersion().orElse(false), getNokeeVersion().map(it -> true).orElse(false)).allMatch(it -> !it.get())));
+	}
 
-       @Internal
-       @Option(option = ShowCommandLineHelpCommand.FLAG, description = ShowCommandLineHelpCommand.HELP_MESSAGE)
-       protected abstract Property<Boolean> getShowHelp();
+	@Internal
+	@Option(option = ShowCommandLineHelpCommand.FLAG, description = ShowCommandLineHelpCommand.HELP_MESSAGE)
+	protected abstract Property<Boolean> getShowHelp();
 
-       @Internal
-       @Option(option = ShowVersionCommand.FLAG, description = ShowVersionCommand.HELP_MESSAGE)
-       protected abstract Property<Boolean> getShowVersion();
+	@Internal
+	@Option(option = ShowVersionCommand.FLAG, description = ShowVersionCommand.HELP_MESSAGE)
+	protected abstract Property<Boolean> getShowVersion();
 
-       @Internal
-       @Option(option = "use-version", description = "Configure nokee version to use in this project.")
-       protected abstract Property<String> getNokeeVersion();
+	@Internal
+	@Option(option = "use-version", description = "Configure nokee version to use in this project.")
+	protected abstract Property<String> getNokeeVersion();
 
-       @Inject
-       protected abstract ProjectLayout getLayout();
+	@Inject
+	protected abstract ProjectLayout getLayout();
 
-       @Inject
-       protected abstract ProviderFactory getProviders();
+	@Inject
+	protected abstract ProviderFactory getProviders();
 
-       @TaskAction
-       private void doAction() {
-              if (getShowHelp().getOrElse(false)) {
-                     new ShowCommandLineHelpCommand(new DefaultConsolePrinter()).run();
-              }
+	@TaskAction
+	private void doAction() {
+		if (getShowHelp().getOrElse(false)) {
+			new ShowCommandLineHelpCommand(new DefaultConsolePrinter()).run();
+		}
 
-              if (getShowVersion().getOrElse(false)) {
-                     new ShowVersionCommand(new DefaultConsolePrinter(), new DefaultNokeeVersionProvider(getLayout().getProjectDirectory()::getAsFile, DefaultSystemPropertyAccessor.INSTANCE, DefaultEnvironmentVariableAccessor.INSTANCE)).run();
-              }
+		if (getShowVersion().getOrElse(false)) {
+			new ShowVersionCommand(new DefaultConsolePrinter(), new DefaultNokeeVersionProvider(getLayout().getProjectDirectory()::getAsFile, DefaultSystemPropertyAccessor.INSTANCE, DefaultEnvironmentVariableAccessor.INSTANCE)).run();
+		}
 
-              if (getNokeeVersion().isPresent()) {
-                     new ConfigureNokeeVersionCommand(() -> getNokeeVersion().get(), new ProjectNokeeVersionWriter(getLayout().getProjectDirectory()::getAsFile)).run();
-              }
-       }
+		if (getNokeeVersion().isPresent()) {
+			new ConfigureNokeeVersionCommand(() -> getNokeeVersion().get(), new ProjectNokeeVersionWriter(getLayout().getProjectDirectory()::getAsFile)).run();
+		}
+	}
 }

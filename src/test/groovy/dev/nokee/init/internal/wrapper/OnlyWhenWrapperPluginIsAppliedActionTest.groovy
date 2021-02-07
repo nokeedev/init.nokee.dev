@@ -10,22 +10,22 @@ import spock.lang.Subject
 
 @Subject(OnlyWhenWrapperPluginIsAppliedAction)
 class OnlyWhenWrapperPluginIsAppliedActionTest extends Specification {
-    def delegate = Mock(Action)
-    def subject = new OnlyWhenWrapperPluginIsAppliedAction(delegate)
+	def delegate = Mock(Action)
+	def subject = new OnlyWhenWrapperPluginIsAppliedAction(delegate)
 
-    def "forwards only when WrapperPlugin is applied"() {
-        given:
-        def appliedPlugin = Mock(WrapperPlugin)
-        def pluginContainer = Mock(PluginContainer)
-        def project = Mock(Project) {
-            getPlugins() >> pluginContainer
-        }
+	def "forwards only when WrapperPlugin is applied"() {
+		given:
+		def appliedPlugin = Mock(WrapperPlugin)
+		def pluginContainer = Mock(PluginContainer)
+		def project = Mock(Project) {
+			getPlugins() >> pluginContainer
+		}
 
-        when:
-        subject.execute(project)
+		when:
+		subject.execute(project)
 
-        then:
-        1 * pluginContainer.withType(WrapperPlugin, _ as Action) >> { args -> args[1].execute(appliedPlugin) }
-        1 * delegate.execute(project)
-    }
+		then:
+		1 * pluginContainer.withType(WrapperPlugin, _ as Action) >> { args -> args[1].execute(appliedPlugin) }
+		1 * delegate.execute(project)
+	}
 }

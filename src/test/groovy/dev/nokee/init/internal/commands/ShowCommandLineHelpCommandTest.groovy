@@ -7,17 +7,17 @@ import spock.lang.Subject
 
 @Subject(ShowCommandLineHelpCommand)
 class ShowCommandLineHelpCommandTest extends Specification {
-    def "shows proper command line help"() {
-        given:
-        def outStream = new ByteArrayOutputStream()
-        def printer = new DefaultConsolePrinter(outStream)
-        def subject = new ShowCommandLineHelpCommand(printer)
+	def "shows proper command line help"() {
+		given:
+		def outStream = new ByteArrayOutputStream()
+		def printer = new DefaultConsolePrinter(outStream)
+		def subject = new ShowCommandLineHelpCommand(printer)
 
-        when:
-        subject.run()
+		when:
+		subject.run()
 
-        then:
-        TextUtil.normaliseLineSeparators(outStream.toString()) == '''
+		then:
+		TextUtil.normaliseLineSeparators(outStream.toString()) == '''
 USAGE: gradlew nokee [option...]
 
 --show-help\t\t\tShows help message.
@@ -25,5 +25,5 @@ USAGE: gradlew nokee [option...]
 --use-version\t\tSpecifies the nokee version to use in this project.
 
 '''
-    }
+	}
 }

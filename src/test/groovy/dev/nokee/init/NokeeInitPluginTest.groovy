@@ -11,51 +11,51 @@ import spock.lang.Subject
 
 @Subject(NokeeInitPlugin)
 class NokeeInitPluginTest extends Specification {
-    def gradle = Mock(Gradle)
+	def gradle = Mock(Gradle)
 
-    def "register build listener"() {
-        given:
-        def subject = new NokeeInitPlugin()
+	def "register build listener"() {
+		given:
+		def subject = new NokeeInitPlugin()
 
-        when:
-        subject.apply(gradle)
+		when:
+		subject.apply(gradle)
 
-        then:
-        1 * gradle.addBuildListener(_ as NokeeInitBuildListener)
-    }
+		then:
+		1 * gradle.addBuildListener(_ as NokeeInitBuildListener)
+	}
 
-    def "register root project configuration"() {
-        given:
-        def subject = new NokeeInitPlugin()
+	def "register root project configuration"() {
+		given:
+		def subject = new NokeeInitPlugin()
 
-        when:
-        subject.apply(gradle)
+		when:
+		subject.apply(gradle)
 
-        then:
-        1 * gradle.rootProject(_ as RegisterNokeeTaskAction)
-    }
+		then:
+		1 * gradle.rootProject(_ as RegisterNokeeTaskAction)
+	}
 
-    def "do nothing on unsupported version"() {
-        given:
-        def gradleVersionProvider = Mock(GradleVersionProvider)
-        def subject = new NokeeInitPlugin(gradleVersionProvider)
+	def "do nothing on unsupported version"() {
+		given:
+		def gradleVersionProvider = Mock(GradleVersionProvider)
+		def subject = new NokeeInitPlugin(gradleVersionProvider)
 
-        when:
-        subject.apply(gradle)
+		when:
+		subject.apply(gradle)
 
-        then:
-        1 * gradleVersionProvider.get() >> GradleVersion.version("6.0")
-        0 * gradle._
-    }
+		then:
+		1 * gradleVersionProvider.get() >> GradleVersion.version("6.0")
+		0 * gradle._
+	}
 
-    def "register wrapper gateway configuration action"() {
-        given:
-        def subject = new NokeeInitPlugin()
+	def "register wrapper gateway configuration action"() {
+		given:
+		def subject = new NokeeInitPlugin()
 
-        when:
-        subject.apply(gradle)
+		when:
+		subject.apply(gradle)
 
-        then:
-        1 * gradle.rootProject(_ as OnlyWhenWrapperPluginIsAppliedAction)
-    }
+		then:
+		1 * gradle.rootProject(_ as OnlyWhenWrapperPluginIsAppliedAction)
+	}
 }

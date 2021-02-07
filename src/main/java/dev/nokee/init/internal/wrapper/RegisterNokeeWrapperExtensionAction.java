@@ -15,26 +15,26 @@ import java.util.Optional;
 import java.util.concurrent.Callable;
 
 public final class RegisterNokeeWrapperExtensionAction implements Action<Wrapper> {
-    private final ObjectFactory objects;
-    private final ProjectLayout layout;
-    private final GradlePropertyAccessor gradlePropertyAccessor;
+	private final ObjectFactory objects;
+	private final ProjectLayout layout;
+	private final GradlePropertyAccessor gradlePropertyAccessor;
 
-    public RegisterNokeeWrapperExtensionAction(ObjectFactory objects, ProjectLayout layout, GradlePropertyAccessor gradlePropertyAccessor) {
-        this.objects = objects;
-        this.layout = layout;
-        this.gradlePropertyAccessor = gradlePropertyAccessor;
-    }
+	public RegisterNokeeWrapperExtensionAction(ObjectFactory objects, ProjectLayout layout, GradlePropertyAccessor gradlePropertyAccessor) {
+		this.objects = objects;
+		this.layout = layout;
+		this.gradlePropertyAccessor = gradlePropertyAccessor;
+	}
 
-    @Override
-    public void execute(Wrapper task) {
-        Property<String> nokeeVersion = objects.property(String.class);
-        RegularFileProperty nokeeInitScriptFile = objects.fileProperty().convention(layout.getProjectDirectory().file("gradle/nokee.init.gradle"));
-        task.getExtensions().add("nokeeVersion", nokeeVersion);
-        task.getExtensions().add("nokeeInitScriptFile", nokeeInitScriptFile);
-        NokeeVersionProvider nokeeVersionProvider = new CompositeNokeeVersionProvider(new DefaultSystemPropertyNokeeVersionProvider(DefaultSystemPropertyAccessor.INSTANCE), new DefaultGradlePropertyNokeeVersionProvider(gradlePropertyAccessor), () -> Optional.ofNullable(nokeeVersion.getOrNull()).map(VersionNumber::parse), new WrapperPropertiesNokeeVersionProviderImpl(task.getPropertiesFile()));
-        task.getInputs().property("useNokeeVersion", (Callable<String>)() -> nokeeVersionProvider.get().map(VersionNumber::toString).orElse(null)).optional(true);
-        task.doLast(new WriteNokeeVersionConfigurationAction(nokeeVersionProvider, task::getPropertiesFile, nokeeInitScriptFile.getAsFile()::get, task::getScriptFile));
-    }
+	@Override
+	public void execute(Wrapper task) {
+		Property<String> nokeeVersion = objects.property(String.class);
+		RegularFileProperty nokeeInitScriptFile = objects.fileProperty().convention(layout.getProjectDirectory().file("gradle/nokee.init.gradle"));
+		task.getExtensions().add("nokeeVersion", nokeeVersion);
+		task.getExtensions().add("nokeeInitScriptFile", nokeeInitScriptFile);
+		NokeeVersionProvider nokeeVersionProvider = new CompositeNokeeVersionProvider(new DefaultSystemPropertyNokeeVersionProvider(DefaultSystemPropertyAccessor.INSTANCE), new DefaultGradlePropertyNokeeVersionProvider(gradlePropertyAccessor), () -> Optional.ofNullable(nokeeVersion.getOrNull()).map(VersionNumber::parse), new WrapperPropertiesNokeeVersionProviderImpl(task.getPropertiesFile()));
+		task.getInputs().property("useNokeeVersion", (Callable<String>)() -> nokeeVersionProvider.get().map(VersionNumber::toString).orElse(null)).optional(true);
+		task.doLast(new WriteNokeeVersionConfigurationAction(nokeeVersionProvider, task::getPropertiesFile, nokeeInitScriptFile.getAsFile()::get, task::getScriptFile));
+	}
 
 
 }

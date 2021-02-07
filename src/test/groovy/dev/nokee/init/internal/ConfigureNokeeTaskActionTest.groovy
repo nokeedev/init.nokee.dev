@@ -7,27 +7,27 @@ import spock.lang.Subject
 
 @Subject(ConfigureNokeeTaskAction)
 class ConfigureNokeeTaskActionTest extends Specification {
-    def subject = new ConfigureNokeeTaskAction();
+	def subject = new ConfigureNokeeTaskAction();
 
-    def "configures task description"() {
-        given:
-        def task = Mock(NokeeTask)
+	def "configures task description"() {
+		given:
+		def task = Mock(NokeeTask)
 
-        when:
-        subject.execute(task)
+		when:
+		subject.execute(task)
 
-        then:
-        1 * task.setDescription("Configures Gradle integration with Nokee plugins.")
-    }
+		then:
+		1 * task.setDescription("Configures Gradle integration with Nokee plugins.")
+	}
 
-    def "configures task group to build setup"() {
-        given:
-        def task = Mock(NokeeTask)
+	def "configures task group to build setup"() {
+		given:
+		def task = Mock(NokeeTask)
 
-        when:
-        subject.execute(task)
+		when:
+		subject.execute(task)
 
-        then:
-        1 * task.setGroup("Build Setup")
-    }
+		then:
+		1 * task.setGroup("Build Setup")
+	}
 }

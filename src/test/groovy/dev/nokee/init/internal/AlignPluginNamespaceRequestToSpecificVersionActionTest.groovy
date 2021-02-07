@@ -9,37 +9,37 @@ import spock.lang.Subject
 
 @Subject(AlignPluginNamespaceRequestToSpecificVersionAction)
 class AlignPluginNamespaceRequestToSpecificVersionActionTest extends Specification {
-    def "can align any plugins under specified plugin namespace to specified version"() {
-        given:
-        def subject = new AlignPluginNamespaceRequestToSpecificVersionAction('dev.nokee.', VersionNumber.parse('1.2.3'))
-        def details = detailsFor('dev.nokee.cpp-library')
+	def "can align any plugins under specified plugin namespace to specified version"() {
+		given:
+		def subject = new AlignPluginNamespaceRequestToSpecificVersionAction('dev.nokee.', VersionNumber.parse('1.2.3'))
+		def details = detailsFor('dev.nokee.cpp-library')
 
-        when:
-        subject.execute(details)
+		when:
+		subject.execute(details)
 
-        then:
-        1 * details.useVersion('1.2.3')
-    }
+		then:
+		1 * details.useVersion('1.2.3')
+	}
 
-    def "does not align plugins outside of namespace"() {
-        given:
-        def subject = new AlignPluginNamespaceRequestToSpecificVersionAction('dev.nokee.', VersionNumber.parse('1.2.3'))
-        def details = detailsFor('org.gradle.cpp-library')
+	def "does not align plugins outside of namespace"() {
+		given:
+		def subject = new AlignPluginNamespaceRequestToSpecificVersionAction('dev.nokee.', VersionNumber.parse('1.2.3'))
+		def details = detailsFor('org.gradle.cpp-library')
 
-        when:
-        subject.execute(details)
+		when:
+		subject.execute(details)
 
-        then:
-        0 * details.useVersion(_)
-    }
+		then:
+		0 * details.useVersion(_)
+	}
 
-    PluginResolveDetails detailsFor(String pluginId) {
-        return Mock(PluginResolveDetails) {
-            getRequested() >> Mock(PluginRequest) {
-                getId() >> Mock(PluginId) {
-                    getId() >> pluginId
-                }
-            }
-        }
-    }
+	PluginResolveDetails detailsFor(String pluginId) {
+		return Mock(PluginResolveDetails) {
+			getRequested() >> Mock(PluginRequest) {
+				getId() >> Mock(PluginId) {
+					getId() >> pluginId
+				}
+			}
+		}
+	}
 }

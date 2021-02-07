@@ -6,14 +6,14 @@ import org.gradle.util.VersionNumber;
 import java.util.Optional;
 
 public final class DefaultGradlePropertyNokeeVersionProvider implements NokeeVersionProvider {
-    private final GradlePropertyAccessor accessor;
+	private final GradlePropertyAccessor accessor;
 
-    public DefaultGradlePropertyNokeeVersionProvider(GradlePropertyAccessor accessor) {
-        this.accessor = accessor;
-    }
+	public DefaultGradlePropertyNokeeVersionProvider(GradlePropertyAccessor accessor) {
+		this.accessor = accessor;
+	}
 
-    @Override
-    public Optional<VersionNumber> get() {
-        return Optional.ofNullable(accessor.get("use-nokee-version")).map(VersionNumber::parse);
-    }
+	@Override
+	public Optional<VersionNumber> get() {
+		return Optional.ofNullable(accessor.get("use-nokee-version")).map(VersionNumber::parse);
+	}
 }

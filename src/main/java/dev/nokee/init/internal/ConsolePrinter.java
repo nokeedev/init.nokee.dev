@@ -1,9 +1,9 @@
 package dev.nokee.init.internal;
 
 public interface ConsolePrinter {
-    ConsolePrinter println(String str);
+	ConsolePrinter println(String str);
 
-    ConsolePrinter println();
+	ConsolePrinter println();
 
-    ConsolePrinter flush();
+	ConsolePrinter flush();
 }

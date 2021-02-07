@@ -10,19 +10,19 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public final class CacheFileNokeeVersionProvider implements NokeeVersionProvider {
-    private final Supplier<File> projectDirectory;
+	private final Supplier<File> projectDirectory;
 
-    public CacheFileNokeeVersionProvider(Supplier<File> projectDirectory) {
-        this.projectDirectory = projectDirectory;
-    }
+	public CacheFileNokeeVersionProvider(Supplier<File> projectDirectory) {
+		this.projectDirectory = projectDirectory;
+	}
 
-    @Override
-    public Optional<VersionNumber> get() {
-        try {
-            String content = FileUtils.readFileToString(new File(projectDirectory.get(), ".gradle/use-nokee-version.txt"), Charset.defaultCharset()).trim();
-            return Optional.of(VersionNumber.parse(content));
-        } catch (IOException ex) {
-            return Optional.empty();
-        }
-    }
+	@Override
+	public Optional<VersionNumber> get() {
+		try {
+			String content = FileUtils.readFileToString(new File(projectDirectory.get(), ".gradle/use-nokee-version.txt"), Charset.defaultCharset()).trim();
+			return Optional.of(VersionNumber.parse(content));
+		} catch (IOException ex) {
+			return Optional.empty();
+		}
+	}
 }
