@@ -12,11 +12,11 @@ public final class GradleWrapperScriptReader implements Closeable {
 	}
 
 	public GradleWrapperScript read() {
-		return new GradleWrapperScript(readAsString());
+		return new GradleWrapperScript(toString(reader));
 	}
 
-	private String readAsString() {
-		return new Scanner(reader).useDelimiter("\\A").next();
+	private static String toString(Reader input) {
+		return new Scanner(input).useDelimiter("\\A").next();
 	}
 
 	@Override
