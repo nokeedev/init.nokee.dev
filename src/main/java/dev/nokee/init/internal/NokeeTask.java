@@ -1,11 +1,9 @@
 package dev.nokee.init.internal;
 
-import dev.nokee.init.internal.accessors.DefaultEnvironmentVariableAccessor;
-import dev.nokee.init.internal.accessors.DefaultSystemPropertyAccessor;
 import dev.nokee.init.internal.commands.ConfigureNokeeVersionCommand;
 import dev.nokee.init.internal.commands.ShowCommandLineHelpCommand;
 import dev.nokee.init.internal.commands.ShowVersionCommand;
-import dev.nokee.init.internal.versions.DefaultNokeeVersionProvider;
+import dev.nokee.init.internal.versions.NokeeVersion;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.provider.Property;
@@ -13,6 +11,7 @@ import org.gradle.api.provider.ProviderFactory;
 import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.options.Option;
+import org.gradle.util.Path;
 
 import javax.inject.Inject;
 import java.util.stream.Stream;
@@ -36,6 +35,12 @@ public abstract class NokeeTask extends DefaultTask {
 	@Option(option = "use-version", description = "Configure nokee version to use in this project.")
 	protected abstract Property<String> getNokeeVersion();
 
+	@Internal
+	protected abstract Property<Path> getBuildIdentityPath();
+
+	@Internal
+	protected abstract Property<NokeeVersion> getCurrentVersion();
+
 	@Inject
 	protected abstract ProjectLayout getLayout();
 
@@ -49,7 +54,7 @@ public abstract class NokeeTask extends DefaultTask {
 		}
 
 		if (getShowVersion().getOrElse(false)) {
-			new ShowVersionCommand(new DefaultConsolePrinter(), new DefaultNokeeVersionProvider(getLayout().getProjectDirectory()::getAsFile, DefaultSystemPropertyAccessor.INSTANCE, DefaultEnvironmentVariableAccessor.INSTANCE)).run();
+			new ShowVersionCommand(new DefaultConsolePrinter(), getCurrentVersion(), getBuildIdentityPath()).run();
 		}
 
 		if (getNokeeVersion().isPresent()) {

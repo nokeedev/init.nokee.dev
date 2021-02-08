@@ -1,0 +1,59 @@
+// TODO: Mention the that Gradlew batch script when updating can have strange side-effects.
+
+// TODO: we should not attach descendent nested build task if there is no system property flags
+// TODO: Support older values as well (USE_NOKEE_VERSION, use-nokee-version, wrapper system property as well) with warning
+
+== Nokee version provider
+
+The init plugins will source the Nokee version from various places:
+1- (persistant) From within `buildSrc` or included build -> useful when building plugins against Nokee API
+```
+dependencies {
+    implementation platform('dev.nokee:nokee-gradle-plugins:0.4.0')
+}
+```
+2- (persistant) From settings `buildscript`:
+settings.gradle[.kts]
+```
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = 'https://dl.bintray.com/nokeedev/distributions' }
+    }
+    dependencies {
+        classpath platform('dev.nokee:nokee-gradle-plugins:0.4.0')
+    }
+}
+```
+
+5- System property `nokee-version`, i.e.
+- *nix/windows `./gradlew -Dnokee-version=0.4.0 nokee --show-version`
+6- Gradle property `nokee-version`, i.e
+- *nix/windows `./gradlew -Pnokee-version=0.4.0 nokee --show-version`
+- Works as Gradle property envionment variable: `ORG_GRADLE_PROJECT_nokee-version` (but prefer `NOKEE_VERSION` environment variable, it's shorter ;-) )
+7- (user persistant) Environment variable `NOKEE_VERSION`, i.e.
+- *nix: `NOKEE_VERSION=0.4.0 ./gradlew nokee --show-version`
+- *nix:
+```
+$ export NOKEE_VERSION=0.4.0
+$ ./gradlew nokee --show-version
+```
+- Windows:
+```
+> set NOKEE_VERSION=0.4.0
+> gradlew nokee --show-version
+```
+3- (temporary) Cache file
+4- (persistant) Gradle wrapper properties: `gradle/wrapper/gradle-wrapper.properties`, value: `nokeeVersion=0.4.0`
+
+
+
+
+== Deprecation notice
+Previous values are deprecated and should no longer be used:
+ - use-nokee-version System/Gradle property use nokee-version instead
+ - USE_NOKEE_VERSION environment variable use NOKEE_VERSION instead
+ - .gradle/use-nokee-version.txt cache file use .gradle/nokee-version.txt
+
+
+useNokeeVersionFromWrapper was included in Gradle wrapper, just regenerate the wrapper

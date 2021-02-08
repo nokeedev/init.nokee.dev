@@ -1,8 +1,7 @@
 package dev.nokee.init.internal.wrapper
 
-import dev.nokee.init.internal.accessors.GradlePropertyAccessor
+
 import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.plugins.ExtensionContainer
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.wrapper.Wrapper
 import org.gradle.testfixtures.ProjectBuilder
@@ -14,7 +13,7 @@ import static dev.nokee.init.internal.utils.FilenameUtils.separatorsToUnix
 @Subject(RegisterNokeeWrapperExtensionAction)
 class RegisterNokeeWrapperExtensionActionTest extends Specification {
 	def project = ProjectBuilder.builder().build()
-	def subject = new RegisterNokeeWrapperExtensionAction(project.objects, project.layout, Mock(GradlePropertyAccessor))
+	def subject = new RegisterNokeeWrapperExtensionAction(project.objects, project.layout)
 
 	def "registers nokee wrapper extensions"() {
 		given:

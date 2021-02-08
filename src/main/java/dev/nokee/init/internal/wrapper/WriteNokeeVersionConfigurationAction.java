@@ -1,6 +1,7 @@
 package dev.nokee.init.internal.wrapper;
 
 import dev.nokee.init.internal.utils.FileUtils;
+import dev.nokee.init.internal.versions.NokeeVersion;
 import dev.nokee.init.internal.versions.NokeeVersionProvider;
 import lombok.val;
 import org.gradle.api.Action;
@@ -34,7 +35,7 @@ public final class WriteNokeeVersionConfigurationAction implements Action<Task> 
 
 	@Override
 	public void execute(Task task) {
-		nokeeVersionProvider.get().ifPresent(nokeeVersion -> {
+		nokeeVersionProvider.get().map(NokeeVersion::get).ifPresent(nokeeVersion -> {
 			updateWrapperProperties(nokeeVersion);
 			writeInitScriptFile();
 			patchWrapperScriptFiles(nokeeVersion);

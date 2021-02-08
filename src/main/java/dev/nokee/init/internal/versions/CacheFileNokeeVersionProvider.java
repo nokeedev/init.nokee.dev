@@ -6,21 +6,26 @@ import org.gradle.util.VersionNumber;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 public final class CacheFileNokeeVersionProvider implements NokeeVersionProvider {
-	private final Supplier<File> projectDirectory;
+	private static final NokeeVersionFactory FACTORY = new NokeeVersionFactory(NokeeVersionSource.CacheFile);
+	private final File cacheFile;
 
-	public CacheFileNokeeVersionProvider(Supplier<File> projectDirectory) {
-		this.projectDirectory = projectDirectory;
+	public CacheFileNokeeVersionProvider(File cacheFile) {
+		this.cacheFile = cacheFile;
 	}
 
 	@Override
-	public Optional<VersionNumber> get() {
+	public Optional<NokeeVersion> get() {
+//		val d = (URLClassLoader) getClass().getClassLoader();
+//		Arrays.stream(d.getURLs()).forEach(System.out::println);
+//		Arrays.stream(((URLClassLoader)d.getParent()).getURLs()).forEach(System.out::println);
 		try {
-			String content = FileUtils.readFileToString(new File(projectDirectory.get(), ".gradle/use-nokee-version.txt"), Charset.defaultCharset()).trim();
-			return Optional.of(VersionNumber.parse(content));
+			String content = FileUtils.readFileToString(cacheFile, StandardCharsets.UTF_8).trim();
+			return Optional.of(FACTORY.create(content));
 		} catch (IOException ex) {
 			return Optional.empty();
 		}

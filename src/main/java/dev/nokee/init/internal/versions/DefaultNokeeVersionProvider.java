@@ -1,22 +1,77 @@
 package dev.nokee.init.internal.versions;
 
-import dev.nokee.init.internal.accessors.EnvironmentVariableAccessor;
-import dev.nokee.init.internal.accessors.SystemPropertyAccessor;
-import org.gradle.util.VersionNumber;
+import dev.nokee.init.internal.utils.GradleUtils;
+import lombok.val;
+import lombok.var;
+import org.gradle.api.file.Directory;
+import org.gradle.api.initialization.Settings;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
+import org.gradle.api.provider.ProviderFactory;
 
+import javax.annotation.Nullable;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
 
-public final class DefaultNokeeVersionProvider implements NokeeVersionProvider {
-	private final NokeeVersionProvider delegate;
+import static dev.nokee.init.internal.versions.DeprecatedNokeeVersionProvider.warnIfPresent;
 
-	public DefaultNokeeVersionProvider(Supplier<File> projectDirectory, SystemPropertyAccessor systemPropertyAccessor, EnvironmentVariableAccessor environmentVariableAccessor) {
-		this.delegate = new CompositeNokeeVersionProvider(new DefaultSystemPropertyNokeeVersionProvider(systemPropertyAccessor), new EnvironmentVariableNokeeVersionProvider(environmentVariableAccessor), new CacheFileNokeeVersionProvider(projectDirectory), new WrapperSystemPropertyNokeeVersionProvider(systemPropertyAccessor), new NonRelocatedWrapperPropertiesNokeeVersionProvider(projectDirectory));
+// TODO: Not the right name
+public final class DefaultNokeeVersionProvider implements Callable<NokeeVersion> {
+	private static final Logger LOGGER = Logging.getLogger(DefaultNokeeVersionProvider.class);
+	private final List<NokeeVersionProvider> versionProviders = new ArrayList<>();
+
+	public DefaultNokeeVersionProvider(NokeeVersionProviderFactory providerFactory) {
+		// Gradle wrapper properties
+		versionProviders.add(warnIfPresent(providerFactory.gradleWrapperProperty("useNokeeVersion")));
+		versionProviders.add(providerFactory.gradleWrapperProperty("nokeeVersion"));
+
+		// Cache file
+		versionProviders.add(warnIfPresent(providerFactory.cacheFile(".gradle/use-nokee-version.txt")));
+		versionProviders.add(providerFactory.cacheFile(".gradle/nokee-version.txt"));
+
+		// Environment variables
+		versionProviders.add(warnIfPresent(providerFactory.environmentVariable("USE_NOKEE_VERSION")));
+		versionProviders.add(providerFactory.environmentVariable("NOKEE_VERSION"));
+
+		// Gradle properties
+		versionProviders.add(warnIfPresent(providerFactory.gradleProperty("use-nokee-version")));
+		versionProviders.add(providerFactory.gradleProperty("nokee-version"));
+
+		// System properties
+		versionProviders.add(warnIfPresent(providerFactory.systemProperty("useNokeeVersionFromWrapper"), "Regenerate your wrapper ./gradlew wrapper."));
+		versionProviders.add(warnIfPresent(providerFactory.systemProperty("use-nokee-version")));
+		versionProviders.add(providerFactory.systemProperty("nokee-version"));
+
+		// Buildscript block (most impactful, we should follow)
+		versionProviders.add(providerFactory.buildscript());
 	}
 
+	// TODO: More like warn overload
+	private static Function<NokeeVersion, NokeeVersion> merge(NokeeVersion version) {
+		return v -> {
+			LOGGER.warn("WARNING: " + version + " overrides " + v + ".");
+			return version;
+		};
+	}
+
+	@Nullable
 	@Override
-	public Optional<VersionNumber> get() {
-		return delegate.get();
+	public NokeeVersion call() throws Exception {
+		var result = Optional.<NokeeVersion>empty();
+		for (NokeeVersionProvider versionProvider : versionProviders) {
+			val version = versionProvider.get();
+			if (result.isPresent()) {
+				if (version.isPresent()) {
+					result = result.map(merge(version.get()));
+				}
+			} else {
+				result = version;
+			}
+		}
+		return result.orElse(null);
 	}
 }

@@ -1,8 +1,8 @@
 plugins {
-    id 'dev.gradleplugins.java-gradle-plugin' version '1.1.29'
+    id 'dev.gradleplugins.java-gradle-plugin' version '1.1.35'
     id 'dev.nokee.documentation.bintray-publish' version '0.1.14'
-    id 'dev.gradleplugins.gradle-plugin-unit-test' version '1.1.29'
-    id 'dev.gradleplugins.gradle-plugin-functional-test' version '1.1.29'
+    id 'dev.gradleplugins.gradle-plugin-unit-test' version '1.1.35'
+    id 'dev.gradleplugins.gradle-plugin-functional-test' version '1.1.35'
 }
 
 group = 'dev.nokee.init'
@@ -56,7 +56,9 @@ test {
         // Mockito
         implementation "org.mockito:mockito-core:${mockitoVersion}"
 
-        implementation 'com.google.guava:guava-testlib:30.1-jre'
+		implementation 'org.hamcrest:hamcrest-core:2.2'
+
+		implementation 'com.google.guava:guava-testlib:30.1-jre'
     }
 }
 
