@@ -58,7 +58,7 @@ public abstract class NokeeTask extends DefaultTask {
 		}
 
 		if (getNokeeVersion().isPresent()) {
-			new ConfigureNokeeVersionCommand(() -> getNokeeVersion().get(), new ProjectNokeeVersionWriter(getLayout().getProjectDirectory()::getAsFile)).run();
+			new ConfigureNokeeVersionCommand(() -> getNokeeVersion().get(), getLayout().getProjectDirectory().getAsFile()).run();
 		}
 	}
 }
