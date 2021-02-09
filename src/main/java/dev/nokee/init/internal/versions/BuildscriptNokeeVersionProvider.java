@@ -35,10 +35,8 @@ public final class BuildscriptNokeeVersionProvider implements NokeeVersionProvid
 
 	private NokeeVersion inferNokeeVersion(Set<FileSystemLocation> files) {
 		return files.stream().map(FileSystemLocation::getAsFile).filter(it -> {
-			System.out.println("YO " + it);
 			return it.getAbsolutePath().contains("/dev.nokee/");
 		}).map(it -> {
-//			System.out.println(it);
 			return it.getName().replace(".jar", "").split("-")[1];
 		}).findFirst().map(FACTORY::create).orElse(null);
 	}

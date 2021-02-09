@@ -45,10 +45,8 @@ public final class BuildClasspathNokeeVersionProvider implements NokeeVersionPro
 
 	private NokeeVersion inferNokeeVersion(Set<FileSystemLocation> files) {
 		return files.stream().map(FileSystemLocation::getAsFile).filter(it -> {
-//			System.out.println("YO " + it);
 			return it.getAbsolutePath().contains("/dev.nokee/");
 		}).map(it -> {
-//			System.out.println(it);
 			return it.getName().replace(".jar", "").split("-")[1];
 		}).findFirst().map(FACTORY::create).orElse(null);
 	}
@@ -84,7 +82,6 @@ public final class BuildClasspathNokeeVersionProvider implements NokeeVersionPro
 				@Override
 				public void visitClassPath(URL[] classPath) {
 					Arrays.stream(classPath).filter(it -> {
-//						System.out.println("YOOOO " + it);
 						// TODO: the cache seems to have changed, we should prepend all nokee artifact with nokee-
 						// TODO: For now, let's have a list of known artifact baseName and find those
 						//   Also add a flag to disable mismatch check (just in case), when the flag is enabled, we should warn on the command line the flag may hide version mismatch causing various errors at runtime, instead, report the error to Nokee project
