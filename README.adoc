@@ -26,12 +26,12 @@ buildscript {
 }
 ```
 
-5- System property `nokee-version`, i.e.
+3- System property `nokee-version`, i.e.
 - *nix/windows `./gradlew -Dnokee-version=0.4.0 nokee --show-version`
-6- Gradle property `nokee-version`, i.e
+4- Gradle property `nokee-version`, i.e
 - *nix/windows `./gradlew -Pnokee-version=0.4.0 nokee --show-version`
 - Works as Gradle property envionment variable: `ORG_GRADLE_PROJECT_nokee-version` (but prefer `NOKEE_VERSION` environment variable, it's shorter ;-) )
-7- (user persistant) Environment variable `NOKEE_VERSION`, i.e.
+5- (user persistant) Environment variable `NOKEE_VERSION`, i.e.
 - *nix: `NOKEE_VERSION=0.4.0 ./gradlew nokee --show-version`
 - *nix:
 ```
@@ -43,8 +43,8 @@ $ ./gradlew nokee --show-version
 > set NOKEE_VERSION=0.4.0
 > gradlew nokee --show-version
 ```
-3- (temporary) Cache file
-4- (persistant) Gradle wrapper properties: `gradle/wrapper/gradle-wrapper.properties`, value: `nokeeVersion=0.4.0`
+6- (temporary) Cache file
+7- (persistant) Gradle wrapper properties: `gradle/wrapper/gradle-wrapper.properties`, value: `nokeeVersion=0.4.0`
 
 
 
