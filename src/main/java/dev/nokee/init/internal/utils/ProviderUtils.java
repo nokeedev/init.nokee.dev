@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 public final class ProviderUtils {
 	private ProviderUtils() {}
 
+	// TODO(grava): Move this in grava-utils
 	public static <S> Provider<S> forUseAtConfigurationTime(Provider<S> provider) {
 		if (GradleVersion.current().compareTo(GradleVersion.version("6.5")) >= 0) {
 			try {

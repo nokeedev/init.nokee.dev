@@ -1,13 +1,12 @@
 package dev.nokee.init.internal.versions;
 
 import dev.nokee.init.internal.utils.GradleUtils;
-import org.gradle.api.file.RegularFile;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.provider.ProviderFactory;
 
 import java.io.File;
 
-public class DefaultNokeeVersionProviderFactory implements NokeeVersionProviderFactory {
+public final class DefaultNokeeVersionProviderFactory implements NokeeVersionProviderFactory {
 	private final ProviderFactory providers;
 	private final Settings settings;
 

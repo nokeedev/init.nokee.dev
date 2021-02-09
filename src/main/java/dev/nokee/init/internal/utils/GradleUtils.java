@@ -10,6 +10,7 @@ import java.io.File;
 public final class GradleUtils {
 	private GradleUtils() {}
 
+	// TODO(grava): Move to grava-utils
 	public static File getRootBuildDirectory(Settings self) {
 		Gradle rootGradle = self.getGradle();
 		while (rootGradle.getParent() != null) {
@@ -22,6 +23,7 @@ public final class GradleUtils {
 		return ((GradleInternal)rootGradle).getSettings().getRootDir();
 	}
 
+	// TODO(grava): Move to grava-utils
 	public static Path getIdentityPath(Gradle self) {
 		return ((GradleInternal)self).getIdentityPath();
 	}

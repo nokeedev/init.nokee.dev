@@ -82,8 +82,7 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 	}
 
 	def "can detect Nokee version from build classpath configured via settings buildscript"() {
-		println testDirectory
-		file(settingsFileName) << """
+		file(settingsFileName) << '''
 			buildscript {
 				repositories {
 					jcenter()
@@ -93,11 +92,9 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 					classpath platform("dev.nokee:nokee-gradle-plugins:0.4.0")
 				}
 			}
-		"""
-//		GradleWrapperFixture.writeGradleWrapperTo(testDirectory)
+		'''
 
 		expect:
-//		def result = GradleRunner.create(GradleExecutor.gradleWrapper()).inDirectory(testDirectory).usingInitScript(initScript).withTasks('nokee', showVersionFlag).build()
 		def result = succeeds('nokee', showVersionFlag)
 		result.output.contains("Build '${buildPathUnderTest}' using Nokee version '0.4.0' (from buildscript classpath).")
 	}
