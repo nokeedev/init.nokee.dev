@@ -74,7 +74,7 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 		file('buildSrc', buildFileName) << '''
 			repositories {
 				jcenter()
-				maven { url = 'https://dl.bintray.com/nokeedev/distributions' }
+				maven { url = 'https://repo.nokeedev.net/release' }
 			}
 
 			dependencies {
@@ -93,7 +93,7 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 			buildscript {
 				repositories {
 					jcenter()
-					maven { url = 'https://dl.bintray.com/nokeedev/distributions' }
+					maven { url = 'https://repo.nokeedev.net/release' }
 				}
 				dependencies {
 					classpath platform("dev.nokee:nokee-gradle-plugins:0.4.0")
@@ -120,7 +120,7 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 
 			repositories {
 				jcenter()
-				maven { url = 'https://dl.bintray.com/nokeedev/distributions' }
+				maven { url = 'https://repo.nokeedev.net/release' }
 			}
 
 			dependencies {
