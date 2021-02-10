@@ -83,7 +83,6 @@ functionalTest {
         implementation "org.mockito:mockito-core:${mockitoVersion}"
     }
     testTasks.configureEach { Test task ->
-        task.dependsOn('publishAllPublicationsToStagingRepository')
         task.systemProperty('dev.nokee.init.gold-nokee-init-script', file('nokee.init.gradle').absolutePath)
 
         if (task.name == 'functionalTestMinimumGradle') {
