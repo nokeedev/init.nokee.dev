@@ -40,6 +40,7 @@ public class GradleWrapperGenerateWithNokeeFunctionalTest {
 			.build();
 	}
 
+	// TODO: check hash instead of a gold init script
 	private static File getGoldNokeeInitScriptFile() {
 		return new File(System.getProperty("dev.nokee.init.gold-nokee-init-script"));
 	}
