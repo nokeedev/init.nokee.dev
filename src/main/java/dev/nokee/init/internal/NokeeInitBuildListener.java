@@ -5,26 +5,33 @@ import org.gradle.BuildAdapter;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.initialization.Settings;
-import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
+import org.gradle.plugin.management.PluginManagementSpec;
+
+import static dev.nokee.init.internal.NokeeRepositories.releaseRepository;
+import static dev.nokee.init.internal.NokeeRepositories.snapshotRepository;
 
 public final class NokeeInitBuildListener extends BuildAdapter {
 	private static final String NOKEE_EXTENSION_NAME = "nokee";
-	private static final Logger LOGGER = Logging.getLogger(NokeeInitBuildListener.class);
 
 	@Override
 	public void beforeSettings(Settings settings) {
 		val extension = registerExtension(settings);
+		settings.pluginManagement(configurePluginResolution(extension));
+	}
 
-//		settings.pluginManagement(spec -> {
-//			System.out.println("LLL " + spec);
-//			spec.resolutionStrategy(stra -> {
-//				System.out.println("FFF " + stra);
-//				stra.eachPlugin(de -> {
-//					System.out.println("RRR " + de);
-//				});
-//			});
-//		});
+	private static Action<PluginManagementSpec> configurePluginResolution(NokeeExtension extension) {
+		return spec -> {
+			spec.getRepositories().maven(releaseRepository());
+			spec.getRepositories().maven(snapshotRepository());
+			spec.getRepositories().gradlePluginPortal();
+			spec.resolutionStrategy(strategy -> {
+				strategy.eachPlugin(details -> {
+					if (details.getRequested().getId().getId().startsWith("dev.nokee.") && extension.getVersion().isPresent()) {
+						details.useVersion(extension.getVersion().get().get().toString());
+					}
+				});
+			});
+		};
 	}
 
 	private static NokeeExtension registerExtension(Settings settings) {

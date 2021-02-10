@@ -46,8 +46,9 @@ public final class DefaultNokeeVersionProvider implements Callable<NokeeVersion>
 		versionProviders.add(warnIfPresent(providerFactory.systemProperty("use-nokee-version")));
 		versionProviders.add(providerFactory.systemProperty("nokee-version"));
 
+		// TODO: This provider should be added after settings is evaluated as it cause issue with version alignments
 		// Buildscript block (most impactful, we should follow)
-		versionProviders.add(providerFactory.buildscript());
+//		versionProviders.add(providerFactory.buildscript());
 	}
 
 	// TODO: More like warn overload

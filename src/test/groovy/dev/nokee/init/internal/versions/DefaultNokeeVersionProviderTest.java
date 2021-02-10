@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import lombok.val;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -65,27 +66,33 @@ class DefaultNokeeVersionProviderTest {
 	}
 
 	//region Ordering of buildscript
+	// TODO: buildscript version provider cause problems with version alignments
 	@Test
+	@Disabled
 	void buildscriptOverwritesSystemProperty() {
 		assertThat(buildscriptProvider, overrides(nokeeVersionSystemPropertyProvider));
 	}
 
 	@Test
+	@Disabled
 	void buildscriptOverwritesGradleProperty() {
 		assertThat(buildscriptProvider, overrides(nokeeVersionGradlePropertyProvider));
 	}
 
 	@Test
+	@Disabled
 	void buildscriptOverwritesEnvironmentVariable() {
 		assertThat(buildscriptProvider, overrides(nokeeVersionEnvironmentVariableProvider));
 	}
 
 	@Test
+	@Disabled
 	void buildscriptOverwritesCacheFile() {
 		assertThat(buildscriptProvider, overrides(nokeeVersionCacheFileProvider));
 	}
 
 	@Test
+	@Disabled
 	void buildscriptOverwritesGradleWrapperProperty() {
 		assertThat(buildscriptProvider, overrides(nokeeVersionGradleWrapperPropertyProvider));
 	}
