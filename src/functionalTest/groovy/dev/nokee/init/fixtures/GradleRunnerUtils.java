@@ -41,7 +41,11 @@ public class GradleRunnerUtils {
 	}
 
 	private static String asQuotedAbsolutePathSpread(Iterable<File> classpath) {
-		return StreamSupport.stream(classpath.spliterator(), false).map(quoted(File::getAbsolutePath)).collect(Collectors.joining(", "));
+		return StreamSupport.stream(classpath.spliterator(), false).map(quoted(doubleBackSlash(File::getAbsolutePath))).collect(Collectors.joining(", "));
+	}
+
+	private static <T> Function<T, String> doubleBackSlash(Function<T, String> mapper) {
+		return t -> mapper.apply(t).replace("\\", "\\\\");
 	}
 
 	private static <T> Function<T, String> quoted(Function<T, String> mapper) {
