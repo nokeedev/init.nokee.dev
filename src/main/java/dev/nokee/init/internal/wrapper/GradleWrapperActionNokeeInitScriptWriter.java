@@ -32,5 +32,6 @@ public final class GradleWrapperActionNokeeInitScriptWriter implements Action<Ta
 		} finally {
 			closeQuietly(inStream);
 		}
+		nokeeInitScriptFileProvider.get().setExecutable(false, false);
 	}
 }
