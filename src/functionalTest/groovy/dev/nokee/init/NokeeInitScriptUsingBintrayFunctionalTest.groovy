@@ -15,7 +15,7 @@ class NokeeInitScriptUsingBintrayFunctionalTest extends AbstractGradleSpecificat
 
 		expect:
 		def result = succeeds('help', '-w')
-		result.output.contains("Please update init script '${testDirectory}/user-home/init.d/nokee.init.gradle' to a newer version.\nLearn more at https://github.com/nokeedev/init.nokee.dev#bintray-deprecation")
+		result.output.contains("Please update init script '${file('user-home/init.d/nokee.init.gradle')}' to a newer version.\nLearn more at https://github.com/nokeedev/init.nokee.dev#bintray-deprecation")
 	}
 
 	def "init script as CLI init-script"() {
@@ -25,7 +25,7 @@ class NokeeInitScriptUsingBintrayFunctionalTest extends AbstractGradleSpecificat
 
 		expect:
 		def result = succeeds('help', '-w')
-		result.output.contains("Please update init script '${testDirectory}/nokee.init.gradle' to a newer version.\nLearn more at https://github.com/nokeedev/init.nokee.dev#bintray-deprecation")
+		result.output.contains("Please update init script '${file('nokee.init.gradle')}' to a newer version.\nLearn more at https://github.com/nokeedev/init.nokee.dev#bintray-deprecation")
 	}
 
 	private static String getBintrayEnabledNokeeInitScriptContent() {
