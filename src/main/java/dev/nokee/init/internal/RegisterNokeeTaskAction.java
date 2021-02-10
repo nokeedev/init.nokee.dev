@@ -8,19 +8,27 @@ import org.gradle.api.provider.Provider;
 import org.gradle.api.provider.ProviderFactory;
 import org.gradle.api.tasks.TaskReference;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Collections.*;
 
 public final class RegisterNokeeTaskAction implements Action<Project> {
 	@Override
 	public void execute(Project project) {
 		val extensionProvider = project.provider(() -> project.getExtensions().getByType(NokeeExtension.class));
 		project.getTasks().register("nokee", NokeeTask.class, task -> {
-			task.dependsOn(includedBuildsNokeeTasks(project));
+			task.dependsOn(showVersionAlternateFlag(task.getProviders()).map(it -> {
+				if (it) {
+					return includedBuildsNokeeTasks(project);
+				}
+				return emptyList();
+			}));
 			task.setDescription("Configures Gradle integration with Nokee plugins.");
 			task.setGroup("Build Setup");
 
-			// TODO: Move the provider into the extension
+			// TODO: Move the build classpath provider into the extension
 			task.getCurrentVersion().set(extensionProvider.flatMap(it -> it.getVersion().orElse(task.getProviders().provider(() -> new BuildClasspathNokeeVersionProvider(task.getProject()).get().orElse(null)))));
 
 			task.getShowVersion().convention(showVersionAlternateFlag(task.getProviders()));
