@@ -6,21 +6,24 @@ import lombok.val;
 import org.apache.commons.io.FileUtils;
 import org.gradle.util.GUtil;
 import org.hamcrest.Matchers;
+import org.hamcrest.io.FileMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.PosixFilePermission;
 
 import static dev.nokee.init.fixtures.GradleRunnerUtils.configurePluginClasspathAsInitScriptDependencies;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.attribute.PosixFilePermission.*;
 import static org.apache.commons.io.FileUtils.readLines;
 import static org.gradle.util.GUtil.loadProperties;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -67,5 +70,10 @@ public class GradleWrapperGenerateWithNokeeFunctionalTest {
 		assertThat("gradle-wrapper.properties should contains nokeeVersion property",
 			loadProperties(testDirectory.resolve("gradle/wrapper/gradle-wrapper.properties").toFile()),
 			hasEntry("nokeeVersion", "0.4.0"));
+	}
+
+	@Test
+	void gradleBashScriptIsStillExecutable() {
+		assertThat(testDirectory.resolve("gradlew").toFile().canExecute(), equalTo(true));
 	}
 }
