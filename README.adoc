@@ -61,4 +61,9 @@ useNokeeVersionFromWrapper was included in Gradle wrapper, just regenerate the w
 [[bintray-deprecation]]
 == Bintray deprecation
 
-Bintray is sunsetting, update your init script with a fresh copy from this repo.
+link:https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/[JFrog is sunsetting their Bintray service by May 1st].
+Sadly for Nokee, we were hosting all our artifacts using their service.
+We are committed to offering our plugins without interruption.
+We already migrated all of our artifacts to our repositories.
+Unfortunately, the Nokee init plugin does not yet provide auto-updating functionally for the init bootstrapping script.
+You will need to use the link:nokee.init.gradle[latest version].
