@@ -29,7 +29,7 @@ public final class RegisterNokeeTaskAction implements Action<Project> {
 			task.setGroup("Build Setup");
 
 			// TODO: Move the build classpath provider into the extension
-			task.getCurrentVersion().set(extensionProvider.flatMap(it -> it.getVersion().orElse(task.getProviders().provider(() -> new BuildClasspathNokeeVersionProvider(task.getProject()).get().orElse(null)))));
+			task.getCurrentVersion().set(task.getProviders().provider(() -> new BuildClasspathNokeeVersionProvider(task.getProject()).get().orElse(null)).orElse(extensionProvider.flatMap(it -> it.getVersion())));
 
 			task.getShowVersion().convention(showVersionAlternateFlag(task.getProviders()));
 			task.getBuildIdentityPath().convention(extensionProvider.flatMap(NokeeExtension::getIdentityPath)).disallowChanges();
