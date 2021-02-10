@@ -57,3 +57,8 @@ Previous values are deprecated and should no longer be used:
 
 
 useNokeeVersionFromWrapper was included in Gradle wrapper, just regenerate the wrapper
+
+[[bintray-deprecation]]
+== Bintray deprecation
+
+Bintray is sunsetting, update your init script with a fresh copy from this repo.
