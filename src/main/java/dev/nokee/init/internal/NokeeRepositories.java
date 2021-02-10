@@ -9,7 +9,7 @@ public final class NokeeRepositories {
 	public static Action<MavenArtifactRepository> releaseRepository() {
 		return repository -> {
 			repository.setName("Nokee Release Artifacts Repository");
-			repository.setUrl("https://repo.nokeedev.net/release");
+			repository.setUrl("https://repo-release.nokeedev.net/");
 			repository.mavenContent(content -> {
 				content.includeGroupByRegex("dev\\.nokee.*");
 				content.includeGroupByRegex("dev\\.gradleplugins.*");
@@ -20,7 +20,7 @@ public final class NokeeRepositories {
 	public static Action<MavenArtifactRepository> snapshotRepository() {
 		return repository -> {
 			repository.setName("Nokee Snapshot Artifacts Repository");
-			repository.setUrl("https://repo.nokeedev.net/snapshot");
+			repository.setUrl("https://repo-snapshot.nokeedev.net");
 			repository.mavenContent(content -> {
 				content.includeGroupByRegex("dev\\.nokee.*");
 				content.includeGroupByRegex("dev\\.gradleplugins.*");

@@ -26,7 +26,7 @@ class NokeeRepositoriesTest {
 
 		@Test
 		void useReleaseRepositoryUrl() {
-			assertThat(subject.getUrl().toString(), equalTo("https://repo.nokeedev.net/release"));
+			assertThat(subject.getUrl().toString(), equalTo("https://repo-release.nokeedev.net"));
 		}
 	}
 
@@ -41,7 +41,7 @@ class NokeeRepositoriesTest {
 
 		@Test
 		void useSnapshotRepositoryUrl() {
-			assertThat(subject.getUrl().toString(), equalTo("https://repo.nokeedev.net/snapshot"));
+			assertThat(subject.getUrl().toString(), equalTo("https://repo-snapshot.nokeedev.net"));
 		}
 	}
 }
