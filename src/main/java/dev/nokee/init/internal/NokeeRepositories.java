@@ -20,7 +20,7 @@ public final class NokeeRepositories {
 	public static Action<MavenArtifactRepository> snapshotRepository() {
 		return repository -> {
 			repository.setName("Nokee Snapshot Artifacts Repository");
-			repository.setUrl("https://repo-snapshot.nokeedev.net");
+			repository.setUrl("https://repo-snapshot.nokeedev.net/");
 			repository.mavenContent(content -> {
 				content.includeGroupByRegex("dev\\.nokee.*");
 				content.includeGroupByRegex("dev\\.gradleplugins.*");
