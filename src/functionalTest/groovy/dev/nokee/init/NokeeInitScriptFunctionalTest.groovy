@@ -17,8 +17,6 @@ class NokeeInitScriptFunctionalTest extends AbstractGradleSpecification {
 
 	def "well-behaved plugin with dependency verification enabled"() {
 		given:
-//		executer = executer.requireOwnGradleUserHomeDirectory()
-//		executer = executer.usingInitScript(initScript)//.requireOwnGradleUserHomeDirectory()
 		file('gradle/verification-metadata.xml') << '''<?xml version="1.0" encoding="UTF-8"?>
 			|<verification-metadata>
 			|   <configuration>
