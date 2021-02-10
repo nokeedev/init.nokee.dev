@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'dev.nokee.init'
-version = '0.7.0'
+version = '0.8.0'
 
 tasks.named('processResources', ProcessResources) { task ->
     task.from(file('nokee.init.gradle')) {
