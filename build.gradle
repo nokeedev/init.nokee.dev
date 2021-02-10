@@ -1,6 +1,6 @@
 plugins {
     id 'dev.gradleplugins.java-gradle-plugin' version '1.1.35'
-    id 'dev.nokee.documentation.bintray-publish' version '0.1.14'
+    id 'dev.nokee.experimental.bintray-publish' version '0.5.0-430640a7'
     id 'dev.gradleplugins.gradle-plugin-unit-test' version '1.1.35'
     id 'dev.gradleplugins.gradle-plugin-functional-test' version '1.1.35'
 }
@@ -98,17 +98,10 @@ tasks.withType(Test).configureEach { it.useJUnitPlatform() }
 publishing {
     repositories {
         maven {
-            name = 'Bintray'
+            name = 'bintray'
             url = 'https://dl.bintray.com/nokeedev/distributions-initialization'
             ext.packageName = 'dev.nokee.init'
-            credentials {
-                username = System.getProperty('dev.nokee.env.BINTRAY_USER')
-                password = System.getProperty('dev.nokee.env.BINTRAY_KEY')
-            }
-        }
-        maven {
-            name = 'Staging'
-            url = layout.buildDirectory.dir('repositories/staging')
+            credentials(PasswordCredentials)
         }
     }
 }
