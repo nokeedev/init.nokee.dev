@@ -14,7 +14,7 @@ jobs:
           id: gradle
           uses: eskatos/gradle-command-action@v1
           with:
-            arguments: assemble --scan --continue --no-daemon "-Ddev.nokee.gradle.cache.remote.username=${{ secrets.GRADLE_CACHE_USERNAME }}" "-Ddev.nokee.gradle.cache.remote.password=${{ secrets.GRADLE_CACHE_PASSWORD }}"
+            arguments: assemble --scan --continue "-Ddev.nokee.gradle.cache.remote.username=${{ secrets.GRADLE_CACHE_USERNAME }}" "-Ddev.nokee.gradle.cache.remote.password=${{ secrets.GRADLE_CACHE_PASSWORD }}" -PbintrayUsername=dummy -PbintrayPassword=dummy
             wrapper-cache-enabled: true
             dependencies-cache-enabled: true
           env:
@@ -36,7 +36,7 @@ jobs:
           id: gradle
           uses: eskatos/gradle-command-action@v1
           with:
-            arguments: check --scan --continue --no-daemon "-Ddev.nokee.gradle.cache.remote.username=${{ secrets.GRADLE_CACHE_USERNAME }}" "-Ddev.nokee.gradle.cache.remote.password=${{ secrets.GRADLE_CACHE_PASSWORD }}"
+            arguments: check --scan --continue "-Ddev.nokee.gradle.cache.remote.username=${{ secrets.GRADLE_CACHE_USERNAME }}" "-Ddev.nokee.gradle.cache.remote.password=${{ secrets.GRADLE_CACHE_PASSWORD }}" -PbintrayUsername=dummy -PbintrayPassword=dummy
             wrapper-cache-enabled: true
             dependencies-cache-enabled: true
           env:
