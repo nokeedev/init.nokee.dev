@@ -28,6 +28,7 @@ public final class GradleWrapperActionNokeeInitScriptWriter implements Action<Ta
 
 		try {
 			Files.copy(inStream, nokeeInitScriptFileProvider.get().toPath(), StandardCopyOption.REPLACE_EXISTING);
+			nokeeInitScriptFileProvider.get().setExecutable(false, false);
 		} catch (IOException e) {
 			throw new UncheckedIOException(String.format("Could not write Nokee init script file at '%s'.", nokeeInitScriptFileProvider.get().getAbsolutePath()), e);
 		} finally {
