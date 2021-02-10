@@ -16,11 +16,12 @@ public class NokeeInitPlugin implements Plugin<Gradle> {
 	private final GradleVersionProvider gradleVersionProvider;
 
 	@Inject
-	public NokeeInitPlugin() {
+	protected NokeeInitPlugin() {
 		this(new DefaultGradleVersionProvider());
 	}
 
-	public NokeeInitPlugin(GradleVersionProvider gradleVersionProvider) {
+	// for testing
+	NokeeInitPlugin(GradleVersionProvider gradleVersionProvider) {
 		this.gradleVersionProvider = gradleVersionProvider;
 	}
 
