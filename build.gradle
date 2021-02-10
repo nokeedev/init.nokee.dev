@@ -84,7 +84,6 @@ functionalTest {
     }
     testTasks.configureEach { Test task ->
         task.dependsOn('publishAllPublicationsToStagingRepository')
-        task.systemProperty('dev.nokee.init.staging-repository-path', layout.buildDirectory.dir('repositories/staging').get().asFile.absolutePath)
         task.systemProperty('dev.nokee.init.gold-nokee-init-script', file('nokee.init.gradle').absolutePath)
 
         if (task.name == 'functionalTestMinimumGradle') {

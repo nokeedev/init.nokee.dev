@@ -158,11 +158,6 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 		result.output.contains("Build '${buildPathUnderTest}' using Nokee version '0.4.0' (from build classpath).")
 	}
 
-
-
-
-
-
 	def "can detect Nokee version from previous System property and warn its usage"() {
 		expect:
 		def result = succeeds('nokee', showVersionFlag, '-Duse-nokee-version=0.4.0', '-w')
