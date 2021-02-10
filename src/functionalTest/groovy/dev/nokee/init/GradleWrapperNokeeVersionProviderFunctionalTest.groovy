@@ -109,6 +109,23 @@ class GradleWrapperNokeeVersionProviderFunctionalTest extends AbstractGradleSpec
 		file('gradle/wrapper/gradle-wrapper.properties').readLines().contains('nokeeVersion=0.4.0')
 	}
 
+	def "prefers version from buildSrc dependency instead of environment variable"() {
+		file('buildSrc', buildFileName) << '''
+			repositories {
+				jcenter()
+				maven { url = 'https://repo.nokeedev.net/release' }
+			}
+
+			dependencies {
+				implementation platform("dev.nokee:nokee-gradle-plugins:0.4.0")
+			}
+		'''
+
+		expect:
+		executer.withEnvironmentVariable('NOKEE_VERSION', '0.3.0').withTasks('wrapper').build()
+		file('gradle/wrapper/gradle-wrapper.properties').readLines().contains('nokeeVersion=0.4.0')
+	}
+
 	def "takes version from included build"() {
 		settingsFile << '''
 			includeBuild('included-build')

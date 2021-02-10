@@ -22,7 +22,7 @@ public final class RegisterWrapperTaskEnhancementAction implements Action<Projec
 				task.getExtensions().add("nokee", extension);
 
 				// Configure defaults
-				extension.getVersion().convention(extensionProvider.flatMap(it -> it.getVersion().orElse(project.provider(() -> new BuildClasspathNokeeVersionProvider(task.getProject()).get().orElse(null)))).map(it -> it.get().toString())).finalizeValueOnRead();
+				extension.getVersion().convention(project.provider(() -> new BuildClasspathNokeeVersionProvider(task.getProject()).get().orElse(null)).orElse(extensionProvider.flatMap(it -> it.getVersion())).map(it -> it.get().toString())).finalizeValueOnRead();
 				extension.getInitScriptFile().convention(project.getLayout().getProjectDirectory().file("gradle/nokee.init.gradle")).finalizeValueOnRead();
 
 				// TODO: Here were are using the version provider factory, etc. But in fact it's more a CLI flag provider
