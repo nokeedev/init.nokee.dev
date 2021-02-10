@@ -1,11 +1,23 @@
 package dev.nokee.init.internal;
 
+import dev.nokee.init.NokeeInitPlugin;
 import lombok.val;
 import org.gradle.BuildAdapter;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.initialization.Settings;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.plugin.management.PluginManagementSpec;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static dev.nokee.init.internal.NokeeRepositories.releaseRepository;
 import static dev.nokee.init.internal.NokeeRepositories.snapshotRepository;
@@ -15,8 +27,35 @@ public final class NokeeInitBuildListener extends BuildAdapter {
 
 	@Override
 	public void beforeSettings(Settings settings) {
+		settings.getGradle().getStartParameter().getAllInitScripts().forEach(this::warnIfNokeeInitScriptUsingBintray);
 		val extension = registerExtension(settings);
 		settings.pluginManagement(configurePluginResolution(extension));
+	}
+
+	private static final Logger LOGGER = Logging.getLogger(NokeeInitPlugin.class);
+	private static final Set<BintrayMarker> BINTRAY_MARKER = new HashSet<>(Arrays.asList(BintrayMarker.BintrayRepo, BintrayMarker.NokeeInit));
+	private enum BintrayMarker { NokeeInit, BintrayRepo, None }
+	private void warnIfNokeeInitScriptUsingBintray(File initScriptFile) {
+		try (val reader = new BufferedReader(new FileReader(initScriptFile))) {
+			val markers = reader.lines()
+				.map(it -> {
+
+					if (it.contains("init.nokee.dev")) {
+						return BintrayMarker.NokeeInit;
+					} else if (it.contains("dl.bintray.com/nokeedev")) {
+						return BintrayMarker.BintrayRepo;
+					}
+					return BintrayMarker.None;
+				})
+				.filter(it -> !it.equals(BintrayMarker.None))
+				.collect(Collectors.toSet());
+			if (markers.equals(BINTRAY_MARKER)) {
+				LOGGER.warn("Please update init script '" + initScriptFile.getAbsolutePath() + "' to a newer version.");
+				LOGGER.warn("Learn more at https://github.com/nokeedev/init.nokee.dev#bintray-deprecation");
+			}
+		} catch (RuntimeException | IOException e) {
+			// ignore all exceptions
+		}
 	}
 
 	private static Action<PluginManagementSpec> configurePluginResolution(NokeeExtension extension) {

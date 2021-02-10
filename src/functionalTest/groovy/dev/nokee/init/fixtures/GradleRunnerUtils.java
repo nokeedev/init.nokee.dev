@@ -23,7 +23,7 @@ public class GradleRunnerUtils {
 		return configureInitScriptDependencies(getImplementationClassPath());
 	}
 
-	private static Iterable<File> getImplementationClassPath() throws IOException {
+	public static Iterable<File> getImplementationClassPath() throws IOException {
 		val properties = new Properties();
 		properties.load(GradleRunnerUtils.class.getResourceAsStream("/plugin-under-test-metadata.properties"));
 		return Arrays.stream(properties.get("implementation-classpath").toString().split(File.pathSeparator)).map(File::new).collect(Collectors.toList());
@@ -40,7 +40,7 @@ public class GradleRunnerUtils {
 		return content.toString();
 	}
 
-	private static String asQuotedAbsolutePathSpread(Iterable<File> classpath) {
+	public static String asQuotedAbsolutePathSpread(Iterable<File> classpath) {
 		return StreamSupport.stream(classpath.spliterator(), false).map(quoted(doubleBackSlash(File::getAbsolutePath))).collect(Collectors.joining(", "));
 	}
 
