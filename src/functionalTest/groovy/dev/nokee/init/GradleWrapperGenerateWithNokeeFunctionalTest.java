@@ -78,7 +78,8 @@ public class GradleWrapperGenerateWithNokeeFunctionalTest {
 	}
 
 	@Test
-	void initScriptIsNotExecutable() {
-		assertThat(testDirectory.resolve("gradle/nokee.init.gradle").toFile().canExecute(), equalTo(false));
+	void initScriptIsNotExecutable() throws IOException {
+		assertThat(Files.getPosixFilePermissions(testDirectory.resolve("gradle/nokee.init.gradle")),
+			containsInAnyOrder(OWNER_WRITE, OWNER_READ, GROUP_READ, OTHERS_READ)); // chmod 0644
 	}
 }
