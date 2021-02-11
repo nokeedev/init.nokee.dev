@@ -1,9 +1,6 @@
 package dev.nokee.init.internal.wrapper;
 
-import com.google.common.reflect.TypeToken;
 import org.gradle.api.Project;
-import org.gradle.api.file.RegularFileProperty;
-import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.wrapper.Wrapper;
 import org.gradle.buildinit.plugins.WrapperPlugin;
 import org.gradle.testfixtures.ProjectBuilder;
