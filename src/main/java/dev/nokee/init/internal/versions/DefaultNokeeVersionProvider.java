@@ -54,7 +54,9 @@ public final class DefaultNokeeVersionProvider implements Callable<NokeeVersion>
 	// TODO: More like warn overload
 	private static Function<NokeeVersion, NokeeVersion> merge(NokeeVersion version) {
 		return v -> {
-			LOGGER.warn("WARNING: " + version + " overrides " + v + ".");
+			if (!v.equals(version)) {
+				LOGGER.warn("WARNING: " + version + " overrides " + v + ".");
+			}
 			return version;
 		};
 	}
