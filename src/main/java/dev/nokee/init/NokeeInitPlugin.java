@@ -1,5 +1,6 @@
 package dev.nokee.init;
 
+import dev.nokee.init.internal.DisableableBuildListener;
 import dev.nokee.init.internal.NokeeInitBuildListener;
 import dev.nokee.init.internal.RegisterNokeeTaskAction;
 import dev.nokee.init.internal.versions.DefaultGradleVersionProvider;
@@ -28,7 +29,7 @@ public class NokeeInitPlugin implements Plugin<Gradle> {
 	@Override
 	public void apply(Gradle gradle) {
 		if (MINIMUM_GRADLE_SUPPORTED.compareTo(gradleVersionProvider.get()) <= 0) {
-			gradle.addBuildListener(new NokeeInitBuildListener());
+			gradle.addBuildListener(new DisableableBuildListener(new NokeeInitBuildListener()));
 		}
 	}
 }

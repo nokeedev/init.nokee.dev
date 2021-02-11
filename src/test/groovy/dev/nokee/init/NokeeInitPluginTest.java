@@ -1,12 +1,11 @@
 package dev.nokee.init;
 
-import dev.nokee.init.internal.NokeeInitBuildListener;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.util.GradleVersion;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
@@ -22,6 +21,6 @@ class NokeeInitPluginTest {
 	@Test
 	void configuresGradleOnSupportedVersion() {
 		new NokeeInitPlugin(() -> GradleVersion.version("6.3")).apply(gradle);
-		verify(gradle).addBuildListener(isA(NokeeInitBuildListener.class));
+		verify(gradle).addBuildListener(any());
 	}
 }
