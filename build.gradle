@@ -103,6 +103,11 @@ publishing {
             ext.packageName = 'dev.nokee.init'
             credentials(PasswordCredentials)
         }
+		maven {
+			name = 'nokeeRelease'
+			url = 's3://repo-nokee-dev-release'
+			credentials(AwsCredentials)
+		}
     }
 }
 
