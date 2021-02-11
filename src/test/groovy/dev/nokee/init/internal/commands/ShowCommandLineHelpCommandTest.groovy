@@ -20,7 +20,7 @@ class ShowCommandLineHelpCommandTest extends Specification {
 		TextUtil.normaliseLineSeparators(outStream.toString()) == '''
 USAGE: gradlew nokee [option...]
 
---show-help\t\t\tShows help message.
+--show-help\t\tShows help message.
 --show-version\t\tPrint version info.
 --use-version\t\tSpecifies the nokee version to use in this project.
 

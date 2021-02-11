@@ -16,7 +16,7 @@ public final class ShowCommandLineHelpCommand implements Runnable {
 		out.println();
 		out.println("USAGE: gradlew nokee [option...]");
 		out.println();
-		out.println(String.format("--%s\t\t\t%s", FLAG, HELP_MESSAGE));
+		out.println(String.format("--%s\t\t%s", FLAG, HELP_MESSAGE));
 		out.println(String.format("--%s\t\t%s", ShowVersionCommand.FLAG, ShowVersionCommand.HELP_MESSAGE));
 		out.println(String.format("--%s\t\t%s", ConfigureNokeeVersionCommand.FLAG, ConfigureNokeeVersionCommand.HELP_MESSAGE));
 		out.println();
