@@ -32,6 +32,8 @@ public final class DeprecatedNokeeVersionProvider implements NokeeVersionProvide
 					name = "NOKEE_VERSION";
 				} else if (it.getVersionSource().equals(NokeeVersionSource.CacheFile)) {
 					name = ".gradle/nokee-version.txt";
+				} else if (it.getVersionSource().equals(NokeeVersionSource.GradleWrapperProperty)) {
+					name = "nokeeVersion";
 				}
 				LOGGER.warn("WARNING: Use " + name + " " + it.getVersionSource() + " instead.");
 			} else {
