@@ -76,9 +76,4 @@ public class GradleWrapperGenerateWithNokeeFunctionalTest {
 	void gradleBashScriptIsStillExecutable() {
 		assertThat(testDirectory.resolve("gradlew").toFile().canExecute(), equalTo(true));
 	}
-
-	@Test
-	void initScriptIsNotExecutable() throws IOException {
-		assertThat(testDirectory.resolve("gradle/nokee.init.gradle").toFile().canExecute(), equalTo(false));
-	}
 }
