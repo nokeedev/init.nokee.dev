@@ -16,7 +16,7 @@ public abstract class NokeeExtension {
 	@Inject
 	public NokeeExtension(ProviderFactory providers, Settings settings) {
 		getIdentityPath().value(GradleUtils.getIdentityPath(settings.getGradle())).disallowChanges();
-		getVersion().convention(providers.provider(new DefaultNokeeVersionProvider(new DefaultNokeeVersionProviderFactory(providers, settings))));
+		getVersion().convention(providers.provider(new DefaultNokeeVersionProvider(new DefaultNokeeVersionProviderFactory(providers, settings)))).finalizeValueOnRead();
 	}
 
 	public abstract Property<NokeeVersion> getVersion();
