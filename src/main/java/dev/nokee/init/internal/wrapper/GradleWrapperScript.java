@@ -53,7 +53,7 @@ public final class GradleWrapperScript {
 	private static List<String> batchScriptPath(String pathToInitScript) {
 		return Arrays.asList(
 			"set NOKEE_INIT_SCRIPT_FILE=%APP_HOME%\\" + separatorsToWindows(pathToInitScript),
-			"if exist NOKEE_INIT_SCRIPT_FILE set NOKEE_ARGS=--init-script \"%NOKEE_INIT_SCRIPT_FILE%\"",
+			"if exist \"%NOKEE_INIT_SCRIPT_FILE%\" set NOKEE_ARGS=--init-script \"%NOKEE_INIT_SCRIPT_FILE%\"",
 			"");
 	}
 }
