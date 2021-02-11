@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
 
-class DisableableBuildListenerTest {
+class DisableAwareBuildListenerTest {
 	private final BuildListener delegate = mock(BuildListener.class);
-	private final DisableableBuildListener subject = new DisableableBuildListener(delegate);
+	private final DisableAwareBuildListener subject = new DisableAwareBuildListener(delegate);
 
 	@Nested
 	class Enabled {

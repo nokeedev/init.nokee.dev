@@ -6,14 +6,15 @@ import org.gradle.BuildResult;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.invocation.Gradle;
 
-public final class DisableableBuildListener extends BuildAdapter {
+public final class DisableAwareBuildListener extends BuildAdapter implements DisableAware {
 	private final BuildListener delegate;
 	private boolean disabled = false;
 
-	public DisableableBuildListener(BuildListener delegate) {
+	public DisableAwareBuildListener(BuildListener delegate) {
 		this.delegate = delegate;
 	}
 
+	@Override
 	public void disable() {
 		disabled = true;
 	}

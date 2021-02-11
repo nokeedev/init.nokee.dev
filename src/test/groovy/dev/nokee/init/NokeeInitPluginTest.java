@@ -1,6 +1,7 @@
 package dev.nokee.init;
 
 import org.gradle.api.invocation.Gradle;
+import org.gradle.testfixtures.ProjectBuilder;
 import org.gradle.util.GradleVersion;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -10,7 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
 class NokeeInitPluginTest {
-	private final Gradle gradle = Mockito.mock(Gradle.class);
+	private final Gradle gradle = Mockito.spy(ProjectBuilder.builder().build().getGradle());
 
 	@Test
 	void doNothingOnUnsupportedVersion() {
