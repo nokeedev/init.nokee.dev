@@ -212,20 +212,6 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 		result.output.contains("WARNING: Use .gradle/nokee-version.txt cache file instead.")
 	}
 
-	def "does not warn when the same version override another"() {
-		expect:
-		def result = succeeds('nokee', showVersionFlag, '-Dnokee-version=0.4.0', '-Pnokee-version=0.4.0')
-		result.output.contains("Build '${buildPathUnderTest}' using Nokee version '0.4.0' (from System property).")
-		!result.output.contains("WARNING: version '0.4.0' (from System property) overrides version '0.4.0' (from Gradle property).")
-	}
-
-	def "warns when a different version override another"() {
-		expect:
-		def result = succeeds('nokee', showVersionFlag, '-Dnokee-version=0.3.0', '-Pnokee-version=0.4.0')
-		result.output.contains("Build '${buildPathUnderTest}' using Nokee version '0.3.0' (from System property).")
-		result.output.contains("WARNING: version '0.3.0' (from System property) overrides version '0.4.0' (from Gradle property).")
-	}
-
 	protected abstract String getShowVersionFlag()
 
 	protected abstract String getBuildPathUnderTest()

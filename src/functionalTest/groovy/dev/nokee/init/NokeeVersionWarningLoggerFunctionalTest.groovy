@@ -13,6 +13,34 @@ class NokeeVersionWarningLoggerFunctionalTest extends AbstractGradleSpecificatio
 		executer = executer.usingInitScript(initScriptFile)
 	}
 
+	def "does not warn when the same version override another"() {
+		buildFile << '''
+			tasks.register('resolveVersion') {
+				doLast {
+					nokee.version.get()
+				}
+			}
+		'''
+
+		expect:
+		def result = succeeds('resolveVersion', '-Dnokee-version=0.4.0', '-Pnokee-version=0.4.0')
+		!result.output.contains("WARNING: version '0.4.0' (from System property) overrides version '0.4.0' (from Gradle property).")
+	}
+
+	def "warns when a different version override another"() {
+		buildFile << '''
+			tasks.register('resolveVersion') {
+				doLast {
+					nokee.version.get()
+				}
+			}
+		'''
+
+		expect:
+		def result = succeeds('resolveVersion', '-Dnokee-version=0.3.0', '-Pnokee-version=0.4.0')
+		result.output.contains("WARNING: version '0.3.0' (from System property) overrides version '0.4.0' (from Gradle property).")
+	}
+
 	def "warns only once about version conflict"() {
 		buildFile << '''
 			tasks.register('resolveVersion') {
