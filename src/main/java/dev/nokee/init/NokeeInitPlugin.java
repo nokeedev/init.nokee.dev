@@ -29,8 +29,6 @@ public class NokeeInitPlugin implements Plugin<Gradle> {
 	public void apply(Gradle gradle) {
 		if (MINIMUM_GRADLE_SUPPORTED.compareTo(gradleVersionProvider.get()) <= 0) {
 			gradle.addBuildListener(new NokeeInitBuildListener());
-			gradle.rootProject(new RegisterNokeeTaskAction());
-			gradle.rootProject(new RegisterWrapperTaskEnhancementAction());
 		}
 	}
 }

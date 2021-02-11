@@ -1,6 +1,7 @@
 package dev.nokee.init.internal;
 
 import dev.nokee.init.NokeeInitPlugin;
+import dev.nokee.init.internal.wrapper.RegisterWrapperTaskEnhancementAction;
 import lombok.val;
 import org.gradle.BuildAdapter;
 import org.gradle.api.Action;
@@ -30,6 +31,8 @@ public final class NokeeInitBuildListener extends BuildAdapter {
 		settings.getGradle().getStartParameter().getAllInitScripts().forEach(this::warnIfNokeeInitScriptUsingBintray);
 		val extension = registerExtension(settings);
 		settings.pluginManagement(configurePluginResolution(extension));
+		settings.getGradle().rootProject(new RegisterNokeeTaskAction());
+		settings.getGradle().rootProject(new RegisterWrapperTaskEnhancementAction());
 	}
 
 	private static final Logger LOGGER = Logging.getLogger(NokeeInitPlugin.class);
