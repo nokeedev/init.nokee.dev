@@ -1,28 +1,25 @@
-// TODO: Mention the that Gradlew batch script when updating can have strange side-effects.
-
-// TODO: we should not attach descendent nested build task if there is no system property flags
-// TODO: Support older values as well (USE_NOKEE_VERSION, use-nokee-version, wrapper system property as well) with warning
-
 = Nokee Deep Integration with Gradle
 
-To ensure an exceptional integration of the Nokee plugins with Gradle, we use an init script.
-Init script -> bootstrap (least work possible) (local project or system-wide)
-Init plugin -> deep gradle integration, version detection, repository configuration, wrapper enhancement (later build-init templates).
-Nokee plugins -> profits
-
-A project is said to be Nokee enabled if a Nokee version is detected, see section on nokee version detection.
+To ensure an exceptional integration of the Nokee plugins with Gradle, we use advance ticks.
+First, we use an init script to bootstrap Nokee into every build (project-local or system-wide).
+The init script apply what is known as an init plugin where all the magic happen.
+We configure the plugin management repositories for artifact group `dev.nokee` and `dev.gradleplugins`.
+We also detect and align the version for all Nokee plugins.
+Soon, we will also provide build templates to quickly initialize new Nokee-enabled projects.
 
 == Usage
 
-Copy the init script to your home `~/.gradle/init.d` directory.
-You can also use the script via command line using `--init-script` (or `-I`). (less preferable)
+We support two different usage scenario:
+
+1- (preferred) System-wide installation by copying link:nokee.init.gradle[the init script] into your Gradle user home `init.d` directory, e.g. `~/.gradle/init.d`.
+2- Build-local installation by supplying link:nokee.init.gradle[the init script] using `--init-script` command line flag.
 
 == Tasks
 
 === Nokee Task
-entry point for querying information.
-Use CLI flag to control it's behaviour and query.
-See Nokee task CLI flags.
+
+Entrypoint task to query information regarding Nokee's integration with Gradle.
+We provide the following command line flag to the `nokee` task:
 
 --show-help::
 Print helpful information on what the `nokee` task can do for you.
@@ -38,9 +35,10 @@ See version detection priority for more information.
 === Wrapper Task
 The init plugin will patch the Wrapper task to allow for additional wrapper task configuration.
 It does three additional things after the wrapper task finish executing if it detects Nokee usage:
-1- Writes the nokee.init.script to the project (by default in `gradle/nokee.init.gradle`
-2- Patches the wrapper scripts to implicitly pass the init script writen at one on every invocation using `--init-script` flag
-3- Adds configured Nokee version to the `gradle-wrapper.properties` file.
+
+1. Writes the nokee.init.script to the project (by default in `gradle/nokee.init.gradle`
+2. Patches the wrapper scripts to implicitly pass the init script writen at one on every invocation using `--init-script` flag
+3. Adds configured Nokee version to the `gradle-wrapper.properties` file.
 
 We add an extension named `nokee` that control the wrapper enhancement:
 
@@ -55,20 +53,18 @@ Upon the next execution, the version will be considered according to the version
 initScriptFile::
 Location where to write the nokee.init.gradle file, defaults to `gradle/nokee.init.gradle`.
 
-NOTE:
-```
-'""' is not recognized as an internal or external command,
-operable program or batch file.
-```
-
+NOTE: On Windows, invoking the `wrapper` task may yield the following expected output: `'<...>' is not recognized as an internal or external command, operable program or batch file.`
+The patching process adds code in the Gradle wrapper batch script causing the CMD runtime to misinterpret the end of the script.
+It is normal Gradle wrapper behaviour.
 
 == Nokee version detection
 
 The init plugin will source the Nokee version from these various location, _the first one wins_:
 
-1- Included plugin build runtime classpath (e.g. `buildSrc` or any plugin's `includeBuild`).
+1. Included plugin build runtime classpath (e.g. `buildSrc` or any plugin's `includeBuild`).
 Typically, in used when building convention plugins against the Nokee API.
 For example:
++
 ```
 plugins {
     id 'dev.gradleplugins.java-gradle-plugin'
@@ -79,38 +75,41 @@ dependencies {
 }
 ```
 
-2- System property `nokee-version`, i.e. `./gradlew -Dnokee-version=0.4.0 nokee --show-version`.
-
+2. System property `nokee-version`, i.e. `./gradlew -Dnokee-version=0.4.0 nokee --show-version`.
++
 WARNING: Avoid setting this value in your global `gradle.properties`.
 
-3- Gradle property `nokee-version`, i.e. `./gradlew -Pnokee-version=0.4.0 nokee --show-version`.
-
+3. Gradle property `nokee-version`, i.e. `./gradlew -Pnokee-version=0.4.0 nokee --show-version`.
++
 WARNING: Avoid setting this value in your global `gradle.properties`.
-
++
 NOTE: Prefer `NOKEE_VERSION` environment variable to Gradle's long form property setting through environment variable, e.g. `ORG_GRADLE_PROJECT_nokee-version`. It's shorter.
 
-4- Environment variable `NOKEE_VERSION`, i.e.
+4. Environment variable `NOKEE_VERSION`, i.e.
 
 - *nix:
++
 ```
 $ export NOKEE_VERSION=0.4.0
 $ ./gradlew nokee --show-version
 ```
 
 - Windows:
++
 ```
 > set NOKEE_VERSION=0.4.0
 > gradlew nokee --show-version
 ```
 
-5- Temporary version file, i.e. `./gradlew nokee --use-version=0.4.0` (or manually via `echo "0.4.0" > .gradle/nokee-version.txt`)
+5. Temporary version file, i.e. `./gradlew nokee --use-version=0.4.0` (or manually via `echo "0.4.0" > .gradle/nokee-version.txt`)
 
-6- Gradle wrapper properties, e.g. `nokeeVersion` property in `gradle/wrapper/gradle-wrapper.properties`.
+6. Gradle wrapper properties, e.g. `nokeeVersion` property in `gradle/wrapper/gradle-wrapper.properties`.
 
 == Deprecation notice
 Previous Nokee init plugins were using slightly different System/Gradle property, environment variable, and file names.
 Please use the official names mentioned in the version detection section.
 Previous values are deprecated and should no longer be used:
+
  - Instead of `use-nokee-version` System/Gradle property use `nokee-version`,
  - Instead of `USE_NOKEE_VERSION` environment variable use `NOKEE_VERSION`, and
  - Instead of `.gradle/use-nokee-version.txt` cache file use `.gradle/nokee-version.txt`.
