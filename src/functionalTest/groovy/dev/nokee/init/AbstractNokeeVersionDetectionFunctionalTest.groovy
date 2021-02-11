@@ -87,6 +87,23 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 		result.output.contains("Build '${buildPathUnderTest}' using Nokee version '0.4.0' (from build classpath).")
 	}
 
+	def "can detect Nokee snapshot version from build classpath"() {
+		file('buildSrc', buildFileName) << '''
+			repositories {
+				jcenter()
+				maven { url = 'https://repo.nokeedev.net/snapshot' }
+			}
+
+			dependencies {
+				implementation platform("dev.nokee:nokee-gradle-plugins:0.5.0-12c22234")
+			}
+		'''
+
+		expect:
+		def result = succeeds('nokee', showVersionFlag)
+		result.output.contains("Build '${buildPathUnderTest}' using Nokee version '0.5.0-12c22234' (from build classpath).")
+	}
+
 	@Ignore('for now as it cause issue with version alignments')
 	def "can detect Nokee version from build classpath configured via settings buildscript"() {
 		file(settingsFileName) << '''
