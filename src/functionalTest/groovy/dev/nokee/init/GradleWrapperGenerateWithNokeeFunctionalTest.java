@@ -4,9 +4,6 @@ import dev.gradleplugins.runnerkit.GradleExecutor;
 import dev.gradleplugins.runnerkit.GradleRunner;
 import lombok.val;
 import org.apache.commons.io.FileUtils;
-import org.gradle.util.GUtil;
-import org.hamcrest.Matchers;
-import org.hamcrest.io.FileMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -15,16 +12,16 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.attribute.PosixFilePermission;
+import java.util.ArrayList;
+import java.util.Comparator;
 
+import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 import static dev.nokee.init.fixtures.GradleRunnerUtils.configurePluginClasspathAsInitScriptDependencies;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.attribute.PosixFilePermission.*;
 import static org.apache.commons.io.FileUtils.readLines;
 import static org.gradle.util.GUtil.loadProperties;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GradleWrapperGenerateWithNokeeFunctionalTest {
@@ -75,5 +72,18 @@ public class GradleWrapperGenerateWithNokeeFunctionalTest {
 	@Test
 	void gradleBashScriptIsStillExecutable() {
 		assertThat(testDirectory.resolve("gradlew").toFile().canExecute(), equalTo(true));
+	}
+
+	@Test
+	void doesNotIncludeCommentsInGradleWrapperProperties() throws IOException {
+		assertThat(Files.lines(testDirectory.resolve("gradle/wrapper/gradle-wrapper.properties")).findFirst(), optionalWithValue(not(startsWith("#"))));
+	}
+
+	@Test
+	void gradleWrapperPropertiesAreSortedAccordingToTheirNaturalOrder() throws IOException {
+		val actual = Files.readAllLines(testDirectory.resolve("gradle/wrapper/gradle-wrapper.properties"));
+		val expected = new ArrayList<>(actual);
+		expected.sort(Comparator.naturalOrder());
+		assertThat(actual, equalTo(expected));
 	}
 }

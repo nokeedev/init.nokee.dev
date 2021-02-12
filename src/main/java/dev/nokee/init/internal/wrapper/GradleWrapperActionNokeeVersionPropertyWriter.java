@@ -3,12 +3,11 @@ package dev.nokee.init.internal.wrapper;
 import lombok.val;
 import org.gradle.api.Action;
 import org.gradle.api.Task;
-import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
-import org.gradle.util.GUtil;
 
 import java.io.*;
 import java.util.Properties;
+import java.util.TreeMap;
 
 public final class GradleWrapperActionNokeeVersionPropertyWriter implements Action<Task> {
 	private final Provider<String> nokeeVersionProvider;
@@ -36,8 +35,10 @@ public final class GradleWrapperActionNokeeVersionPropertyWriter implements Acti
 	}
 
 	private void writeWrapperProperties(Properties properties) {
-		try (val outStream = new FileOutputStream(propertiesFileProvider.get())) {
-			properties.store(outStream, null);
+		try (val out = new PrintWriter(new FileOutputStream(propertiesFileProvider.get()))) {
+			new TreeMap<>(properties).forEach((key, value) -> {
+				out.println(key + "=" + value);
+			});
 		} catch (IOException e) {
 			throw new UncheckedIOException(String.format("Could not write the wrapper properties file at '%s'.", propertiesFileProvider.get().getAbsolutePath()), e);
 		}

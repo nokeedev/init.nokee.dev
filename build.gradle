@@ -84,6 +84,7 @@ functionalTest {
 
         // Mockito
         implementation "org.mockito:mockito-core:${mockitoVersion}"
+        implementation "com.spotify:hamcrest-optional:1.2.0"
     }
     testTasks.configureEach { Test task ->
         task.systemProperty('dev.nokee.init.gold-nokee-init-script', file('nokee.init.gradle').absolutePath)
