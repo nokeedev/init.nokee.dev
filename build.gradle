@@ -107,7 +107,7 @@ publishing {
         }
 		maven {
 			name = 'nokeeRelease'
-			url = providers.gradleProperty("${name}Url").forUseAtConfigurationTime()
+			url = providers.gradleProperty("${name}Url").forUseAtConfigurationTime().orElse("")
 			credentials(AwsCredentials)
 		}
     }
