@@ -1,9 +1,5 @@
 rootProject.name = 'init.nokee.dev'
 
-if (file('../toolbox').exists()) {
-    includeBuild '../toolbox'
-}
-
 buildCache {
     remote(HttpBuildCache) {
         url = 'https://gradle-build-cache.nokee.dev/cache/'
