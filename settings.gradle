@@ -1,27 +1,27 @@
 rootProject.name = 'init.nokee.dev'
 
 buildCache {
-    remote(HttpBuildCache) {
-        url = 'https://gradle-build-cache.nokee.dev/cache/'
-        credentials {
-            username = System.getProperty('dev.nokee.gradle.cache.remote.username')
-            password = System.getProperty('dev.nokee.gradle.cache.remote.password')
-        }
-        enabled = true
-        push = System.getenv().containsKey('CI')
-    }
+	remote(HttpBuildCache) {
+		url = 'https://gradle-build-cache.nokee.dev/cache/'
+		credentials {
+			username = System.getProperty('dev.nokee.gradle.cache.remote.username')
+			password = System.getProperty('dev.nokee.gradle.cache.remote.password')
+		}
+		enabled = true
+		push = System.getenv().containsKey('CI')
+	}
 }
 
 plugins.withId('com.gradle.enterprise') {
-    gradleEnterprise {
-        buildScan {
-            termsOfServiceUrl = "https://gradle.com/terms-of-service"
-            termsOfServiceAgree = "yes"
+	gradleEnterprise {
+		buildScan {
+			termsOfServiceUrl = "https://gradle.com/terms-of-service"
+			termsOfServiceAgree = "yes"
 
-            if (System.getenv('CI')) {
-                tag 'CI'
-            } else {
-                tag 'LOCAL'
+			if (System.getenv('CI')) {
+				tag 'CI'
+			} else {
+				tag 'LOCAL'
             }
 
             obfuscation {
