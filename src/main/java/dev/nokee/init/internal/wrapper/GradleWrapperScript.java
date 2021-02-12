@@ -25,23 +25,23 @@ public final class GradleWrapperScript {
 	public GradleWrapperScript patch(String pathToInitScript) {
 		// Bash script
 		if (content.contains("\"$APP_ARGS\"")) {
-			return new GradleWrapperScript(join("\n", forContent(content).findLineWith("\"$APP_ARGS\"").injectBefore(bashScriptPath(pathToInitScript)).andPrependPillWith("\"$NOKEE_ARGS\" ").patch()));
+			return new GradleWrapperScript(join("\n", forContent(content).findLineWith("\"$APP_ARGS\"").injectBefore(bashScriptPatch(pathToInitScript)).andPrependPillWith("\"$NOKEE_ARGS\" ").patch()));
 		}
 
 		// Batch script 6.6 and above
 		if (content.contains("%*")) {
-			return new GradleWrapperScript(join("\r\n", forContent(content).findLineWith("%*").injectBefore(batchScriptPath(pathToInitScript)).andPrependPillWith("%NOKEE_ARGS% ").patch()));
+			return new GradleWrapperScript(join("\r\n", forContent(content).findLineWith("%*").injectBefore(batchScriptPatch(pathToInitScript)).andPrependPillWith("%NOKEE_ARGS% ").patch()));
 		}
 
 		// Batch script 6.5 and lower
 		if (content.contains("%CMD_LINE_ARGS%")) {
-			return new GradleWrapperScript(join("\r\n", forContent(content).findLineWith("%CMD_LINE_ARGS%").injectBefore(batchScriptPath(pathToInitScript)).andPrependPillWith("%NOKEE_ARGS% ").patch()));
+			return new GradleWrapperScript(join("\r\n", forContent(content).findLineWith("%CMD_LINE_ARGS%").injectBefore(batchScriptPatch(pathToInitScript)).andPrependPillWith("%NOKEE_ARGS% ").patch()));
 		}
 
 		throw new IllegalStateException("Could not find patching hook inside Gradle wrapper script.");
 	}
 
-	private static List<String> bashScriptPath(String pathToInitScript) {
+	private static List<String> bashScriptPatch(String pathToInitScript) {
 		return Arrays.asList(
 			"NOKEE_INIT_SCRIPT_FILE=$APP_HOME/" + separatorsToUnix(pathToInitScript),
 			"if [ -f \"$NOKEE_INIT_SCRIPT_FILE\" ] ; then",
@@ -50,7 +50,7 @@ public final class GradleWrapperScript {
 			"");
 	}
 
-	private static List<String> batchScriptPath(String pathToInitScript) {
+	private static List<String> batchScriptPatch(String pathToInitScript) {
 		return Arrays.asList(
 			"set NOKEE_INIT_SCRIPT_FILE=%APP_HOME%\\" + separatorsToWindows(pathToInitScript),
 			"if exist \"%NOKEE_INIT_SCRIPT_FILE%\" set NOKEE_ARGS=--init-script \"%NOKEE_INIT_SCRIPT_FILE%\"",
