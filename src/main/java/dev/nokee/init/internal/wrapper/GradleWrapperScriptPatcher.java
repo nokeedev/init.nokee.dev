@@ -39,12 +39,12 @@ public final class GradleWrapperScriptPatcher {
 
 	public List<String> patch() {
 		try (val reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))))) {
-			return reader.lines().flatMap(it -> {
+			return Stream.concat(reader.lines().flatMap(it -> {
 				if (it.contains(pill)) {
 					return Stream.concat(contentToInject.stream(), Stream.of(it.replace(pill, pillPrefix + pill)));
 				}
 				return Stream.of(it);
-			}).collect(Collectors.toList());
+			}), /* for lost of end-of-file newline */ Stream.of("")).collect(Collectors.toList());
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);
 		}

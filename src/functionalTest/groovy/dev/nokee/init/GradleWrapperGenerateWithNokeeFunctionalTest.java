@@ -86,4 +86,14 @@ public class GradleWrapperGenerateWithNokeeFunctionalTest {
 		expected.sort(Comparator.naturalOrder());
 		assertThat(actual, equalTo(expected));
 	}
+
+	@Test
+	void gradleBashScriptHasNewLine() throws IOException {
+		assertThat(new String(Files.readAllBytes(testDirectory.resolve("gradlew"))), endsWith("\n"));
+	}
+
+	@Test
+	void gradleBatchScriptHasNewLine() throws IOException {
+		assertThat(new String(Files.readAllBytes(testDirectory.resolve("gradlew.bat"))), endsWith("\r\n"));
+	}
 }
