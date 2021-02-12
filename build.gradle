@@ -17,6 +17,7 @@ tasks.named('processResources', ProcessResources) { task ->
 repositories {
     mavenCentral()
     gradlePluginDevelopment()
+    jcenter()
 }
 
 gradlePlugin {
