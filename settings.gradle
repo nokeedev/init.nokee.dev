@@ -1,11 +1,3 @@
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        maven { url = 'https://repo.nokeedev.net/release' }
-        maven { url = 'https://repo.nokeedev.net/snapshot' }
-    }
-}
-
 rootProject.name = 'init.nokee.dev'
 
 if (file('../toolbox').exists()) {
