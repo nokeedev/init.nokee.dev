@@ -21,6 +21,7 @@ class GradleWrapperLenientPatchingFunctionalTest extends AbstractGradleSpecifica
 	def "can delete nokee.init.gradle without breaking the build"() {
 		file('gradle/nokee.init.gradle').delete()
 		println Files.exists(file('gradle/nokee.init.gradle').toPath())
+		println(new String(Files.readAllBytes(file('gradle/nokee.init.gradle').toPath())))
 
 		expect:
 		def result = create(gradleWrapper()).inDirectory(testDirectory).withTasks('tasks').build()
