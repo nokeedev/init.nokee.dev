@@ -18,7 +18,7 @@ repositories {
 	mavenCentral()
 	gradlePluginDevelopment()
 	jcenter() {
-		mavenContent { it.excludeModule('net.rubygrapefruit', 'ansi-control-sequence-util') }
+		mavenContent { it.includeModule('net.rubygrapefruit', 'ansi-control-sequence-util') }
 	}
 }
 
