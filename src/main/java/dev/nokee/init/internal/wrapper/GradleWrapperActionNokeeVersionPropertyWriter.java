@@ -4,10 +4,13 @@ import lombok.val;
 import org.gradle.api.Action;
 import org.gradle.api.Task;
 import org.gradle.api.provider.Provider;
+import org.gradle.internal.util.PropertiesUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Properties;
-import java.util.TreeMap;
 
 public final class GradleWrapperActionNokeeVersionPropertyWriter implements Action<Task> {
 	private final Provider<String> nokeeVersionProvider;
@@ -35,10 +38,8 @@ public final class GradleWrapperActionNokeeVersionPropertyWriter implements Acti
 	}
 
 	private void writeWrapperProperties(Properties properties) {
-		try (val out = new PrintWriter(new FileOutputStream(propertiesFileProvider.get()))) {
-			new TreeMap<>(properties).forEach((key, value) -> {
-				out.println(key + "=" + value);
-			});
+		try {
+			PropertiesUtils.store(properties, propertiesFileProvider.get());
 		} catch (IOException e) {
 			throw new UncheckedIOException(String.format("Could not write the wrapper properties file at '%s'.", propertiesFileProvider.get().getAbsolutePath()), e);
 		}

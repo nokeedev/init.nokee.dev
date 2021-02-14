@@ -98,4 +98,10 @@ public class GradleWrapperGenerateWithNokeeFunctionalTest {
 	void gradleBatchScriptHasNewLine() throws IOException {
 		assertThat(new String(Files.readAllBytes(testDirectory.resolve("gradlew.bat"))), endsWith("\r\n"));
 	}
+
+	@Test
+	void gradleWrapperPropertiesAreEncodedAsJustAsItWouldBeWithGradle() throws IOException {
+		val actual = new String(Files.readAllBytes(testDirectory.resolve("gradle/wrapper/gradle-wrapper.properties")));
+		assertThat(actual, containsString("distributionUrl=https\\://services.gradle.org/"));
+	}
 }
