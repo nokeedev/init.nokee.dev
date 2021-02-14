@@ -62,6 +62,6 @@ public class NokeeInitPlugin implements Plugin<Gradle>, DisableAware {
 	}
 
 	public String getVersion() {
-		return "0.8.0";
+		return "0.8.1";
 	}
 }
