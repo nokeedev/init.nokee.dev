@@ -17,6 +17,9 @@ tasks.named('processResources', ProcessResources) { task ->
 repositories {
 	mavenCentral()
 	gradlePluginDevelopment()
+	jcenter() {
+		mavenContent { it.excludeModule('net.rubygrapefruit', 'ansi-control-sequence-util') }
+	}
 }
 
 gradlePlugin {
