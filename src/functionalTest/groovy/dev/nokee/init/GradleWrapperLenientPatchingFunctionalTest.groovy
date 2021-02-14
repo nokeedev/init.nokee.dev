@@ -25,7 +25,6 @@ class GradleWrapperLenientPatchingFunctionalTest extends AbstractGradleSpecifica
 	def "can delete nokee.init.gradle without breaking the build"() {
 		file('gradle/nokee.init.gradle').delete()
 		println Files.exists(file('gradle/nokee.init.gradle').toPath())
-		println(new String(Files.readAllBytes(file('gradle/nokee.init.gradle').toPath())))
 		Files.walkFileTree(testDirectory, new FileVisitor<Path>() {
 			@Override
 			FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
