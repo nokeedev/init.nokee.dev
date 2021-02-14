@@ -49,7 +49,7 @@ class GradleWrapperLenientPatchingFunctionalTest extends AbstractGradleSpecifica
 		})
 
 		expect:
-		def result = create(gradleWrapper()).inDirectory(testDirectory).withTasks('tasks').build()
+		def result = create(gradleWrapper()).inDirectory(testDirectory).withTasks('tasks').buildAndFail()
 		!result.output.contains('nokee')
 	}
 }
