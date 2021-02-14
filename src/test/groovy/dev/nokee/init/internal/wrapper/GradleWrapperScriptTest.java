@@ -8,6 +8,7 @@ import static dev.nokee.init.internal.wrapper.GradleWrapperScriptTestUtils.scrip
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // Real patching is tested in functional tests
@@ -32,6 +33,11 @@ class GradleWrapperScriptTest {
 	void canPatchBatchScriptForGradle6_6Above() {
 		assertThat(script(BATCH_PATCHABLE_SCRIPT_LINE_6_6_ABOVE).patch("gradle/nokee.init.gradle").get(),
 				containsString(" %NOKEE_ARGS% "));
+	}
+
+	@Test
+	void ensuresGradle6_5BelowPatchingIsDoneAtTheRightPlace() {
+		assertThat(script("set CMD_LINE_ARGS=%*\r\n" + BATCH_PATCHABLE_SCRIPT_LINE_6_5_BELOW).patch("gradle/nokee.init.gradle").get(), not(containsString("set CMD_LINE_ARGS=%NOKEE_ARGS% %*")));
 	}
 
 	@Test

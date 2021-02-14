@@ -28,14 +28,14 @@ public final class GradleWrapperScript {
 			return new GradleWrapperScript(join("\n", forContent(content).findLineWith("\"$APP_ARGS\"").injectBefore(bashScriptPatch(pathToInitScript)).andPrependPillWith("\"$NOKEE_ARGS\" ").patch()));
 		}
 
-		// Batch script 6.6 and above
-		if (content.contains("%*")) {
-			return new GradleWrapperScript(join("\r\n", forContent(content).findLineWith("%*").injectBefore(batchScriptPatch(pathToInitScript)).andPrependPillWith("%NOKEE_ARGS% ").patch()));
-		}
-
 		// Batch script 6.5 and lower
 		if (content.contains("%CMD_LINE_ARGS%")) {
 			return new GradleWrapperScript(join("\r\n", forContent(content).findLineWith("%CMD_LINE_ARGS%").injectBefore(batchScriptPatch(pathToInitScript)).andPrependPillWith("%NOKEE_ARGS% ").patch()));
+		}
+
+		// Batch script 6.6 and above
+		if (content.contains("%*")) {
+			return new GradleWrapperScript(join("\r\n", forContent(content).findLineWith("%*").injectBefore(batchScriptPatch(pathToInitScript)).andPrependPillWith("%NOKEE_ARGS% ").patch()));
 		}
 
 		throw new IllegalStateException("Could not find patching hook inside Gradle wrapper script.");
