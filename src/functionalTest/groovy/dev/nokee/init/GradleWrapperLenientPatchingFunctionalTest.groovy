@@ -2,6 +2,8 @@ package dev.nokee.init
 
 import dev.gradleplugins.integtests.fixtures.AbstractGradleSpecification
 
+import java.nio.file.Files
+
 import static dev.gradleplugins.runnerkit.GradleExecutor.gradleWrapper
 import static dev.gradleplugins.runnerkit.GradleRunner.create
 import static dev.nokee.init.fixtures.GradleRunnerUtils.configurePluginClasspathAsInitScriptDependencies
@@ -18,6 +20,7 @@ class GradleWrapperLenientPatchingFunctionalTest extends AbstractGradleSpecifica
 
 	def "can delete nokee.init.gradle without breaking the build"() {
 		file('gradle/nokee.init.gradle').delete()
+		println Files.exists(file('gradle/nokee.init.gradle').toPath())
 
 		expect:
 		def result = create(gradleWrapper()).inDirectory(testDirectory).withTasks('tasks').build()
