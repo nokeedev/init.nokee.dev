@@ -76,7 +76,9 @@ public class GradleWrapperGenerateWithNokeeFunctionalTest {
 
 	@Test
 	void doesNotIncludeCommentsInGradleWrapperProperties() throws IOException {
-		assertThat(Files.lines(testDirectory.resolve("gradle/wrapper/gradle-wrapper.properties")).findFirst(), optionalWithValue(not(startsWith("#"))));
+		try (val lines = Files.lines(testDirectory.resolve("gradle/wrapper/gradle-wrapper.properties"))) {
+			assertThat(lines.findFirst(), optionalWithValue(not(startsWith("#"))));
+		}
 	}
 
 	@Test
