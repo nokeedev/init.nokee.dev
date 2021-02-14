@@ -11,7 +11,10 @@ Soon, we will also provide build templates to quickly initialize new Nokee-enabl
 
 We support two different usage scenario:
 
-1- (preferred) System-wide installation by copying link:nokee.init.gradle[the init script] into your Gradle user home `init.d` directory, e.g. `~/.gradle/init.d`.
+1- (preferred) System-wide installation by copying link:nokee.init.gradle[the init script] into your Gradle user home `init.d` directory, e.g. `~/.gradle/init.d`:
+```
+curl -o ~/.gradle/init.d/nokee.init.gradle https://raw.githubusercontent.com/nokeedev/init.nokee.dev/main/nokee.init.gradle
+```
 2- Build-local installation by supplying link:nokee.init.gradle[the init script] using `--init-script` command line flag.
 
 == Tasks
