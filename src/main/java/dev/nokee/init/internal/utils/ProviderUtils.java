@@ -1,7 +1,6 @@
 package dev.nokee.init.internal.utils;
 
 import org.gradle.api.provider.Provider;
-import org.gradle.api.provider.ProviderFactory;
 import org.gradle.internal.Cast;
 import org.gradle.util.GradleVersion;
 

@@ -1,16 +1,11 @@
 package dev.nokee.init.internal.versions;
 
-import dev.nokee.init.internal.utils.GradleUtils;
 import lombok.val;
 import lombok.var;
-import org.gradle.api.file.Directory;
-import org.gradle.api.initialization.Settings;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
-import org.gradle.api.provider.ProviderFactory;
 
 import javax.annotation.Nullable;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

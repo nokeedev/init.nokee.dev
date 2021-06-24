@@ -1,7 +1,5 @@
 package dev.nokee.init.internal.versions;
 
-import dev.nokee.init.internal.wrapper.GradleWrapperScript;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;

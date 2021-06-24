@@ -6,8 +6,6 @@ import org.gradle.api.Task;
 import org.gradle.api.provider.Provider;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 import static dev.nokee.init.internal.utils.IOUtils.closeQuietly;

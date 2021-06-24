@@ -7,7 +7,6 @@ import java.net.URL;
 
 import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
 import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
-import static dev.nokee.init.internal.versions.NokeeVersion.parse;
 import static dev.nokee.init.internal.versions.NokeeVersionClassPathUtils.inferVersion;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

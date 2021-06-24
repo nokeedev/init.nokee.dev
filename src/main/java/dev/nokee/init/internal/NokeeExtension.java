@@ -1,11 +1,10 @@
 package dev.nokee.init.internal;
 
 import dev.nokee.init.internal.utils.GradleUtils;
+import dev.nokee.init.internal.versions.DefaultNokeeVersionProvider;
 import dev.nokee.init.internal.versions.DefaultNokeeVersionProviderFactory;
 import dev.nokee.init.internal.versions.NokeeVersion;
-import dev.nokee.init.internal.versions.DefaultNokeeVersionProvider;
 import org.gradle.api.initialization.Settings;
-import org.gradle.api.model.ObjectFactory;
 import org.gradle.api.provider.Property;
 import org.gradle.api.provider.ProviderFactory;
 import org.gradle.util.Path;

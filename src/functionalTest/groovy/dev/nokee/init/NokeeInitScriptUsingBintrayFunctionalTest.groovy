@@ -2,10 +2,7 @@ package dev.nokee.init
 
 import dev.gradleplugins.integtests.fixtures.AbstractGradleSpecification
 
-import java.nio.file.Files
-
 import static dev.nokee.init.fixtures.GradleRunnerUtils.asQuotedAbsolutePathSpread
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING
 
 class NokeeInitScriptUsingBintrayFunctionalTest extends AbstractGradleSpecification {
 	def "init script in init.d directory"() {

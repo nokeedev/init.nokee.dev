@@ -3,7 +3,6 @@ package dev.nokee.init
 import dev.gradleplugins.integtests.fixtures.AbstractGradleSpecification
 
 import java.nio.file.Files
-import java.nio.file.StandardCopyOption
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING
 

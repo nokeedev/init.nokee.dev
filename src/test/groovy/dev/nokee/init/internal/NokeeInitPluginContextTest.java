@@ -1,14 +1,10 @@
 package dev.nokee.init.internal;
 
-import com.spotify.hamcrest.optional.OptionalMatchers;
 import lombok.val;
 import org.gradle.api.Plugin;
 import org.gradle.api.invocation.Gradle;
-import org.gradle.util.VersionNumber;
 import org.junit.jupiter.api.Test;
 
-import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
-import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 import static org.gradle.util.VersionNumber.parse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

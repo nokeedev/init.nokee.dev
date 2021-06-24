@@ -1,7 +1,6 @@
 package dev.nokee.init.internal.versions;
 
 import dev.nokee.init.internal.utils.GradleUtils;
-import dev.nokee.init.internal.utils.ProviderUtils;
 import lombok.val;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.provider.Provider;

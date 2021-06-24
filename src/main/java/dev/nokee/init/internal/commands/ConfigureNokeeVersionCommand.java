@@ -3,7 +3,6 @@ package dev.nokee.init.internal.commands;
 import dev.nokee.init.internal.versions.NokeeVersion;
 import dev.nokee.init.internal.versions.NokeeVersionWriter;
 import lombok.val;
-import org.gradle.util.VersionNumber;
 
 import java.io.File;
 import java.io.FileOutputStream;
