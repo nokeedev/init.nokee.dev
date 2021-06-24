@@ -1,12 +1,13 @@
 plugins {
-	id 'dev.gradleplugins.java-gradle-plugin' version '1.1.35'
-	id 'dev.gradleplugins.gradle-plugin-unit-test' version '1.1.35'
-	id 'dev.gradleplugins.gradle-plugin-functional-test' version '1.1.35'
+	id 'dev.gradleplugins.java-gradle-plugin' version '1.3'
+	id 'dev.gradleplugins.gradle-plugin-unit-test' version '1.3'
+	id 'dev.gradleplugins.gradle-plugin-functional-test' version '1.3'
 	id 'maven-publish'
 }
 
 group = 'dev.nokee.init'
 version = '0.8.2' // Change version in NokeeInitPlugin as well
+description = 'Deep integration with Gradle for Nokee plugins'
 
 tasks.named('processResources', ProcessResources) { task ->
 	task.from(file('nokee.init.gradle')) {
