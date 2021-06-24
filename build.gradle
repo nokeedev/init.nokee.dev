@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'dev.nokee.init'
-version = '0.8.3' // Change version in NokeeInitPlugin as well
+version = '0.8.4' // Change version in NokeeInitPlugin as well
 description = 'Deep integration with Gradle for Nokee plugins'
 
 tasks.named('processResources', ProcessResources) { task ->
