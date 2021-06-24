@@ -19,6 +19,10 @@ import java.util.function.Predicate;
 import static dev.nokee.init.internal.DuplicateNokeeInitPluginLoadsDetectionAction.disableDuplicateNokeeInitPluginLoads;
 import static java.util.function.Predicate.isEqual;
 
+/**
+ * Nokee's deep integration plugin for Gradle.
+ * The plugin serves as a global entrypoint to configure Gradle to use Nokee and to manage Nokee versions.
+ */
 public class NokeeInitPlugin implements Plugin<Gradle>, DisableAware {
 	private static final Logger LOGGER = Logging.getLogger(NokeeInitPlugin.class);
 	private static final GradleVersion MINIMUM_GRADLE_SUPPORTED = GradleVersion.version("6.2.1");
