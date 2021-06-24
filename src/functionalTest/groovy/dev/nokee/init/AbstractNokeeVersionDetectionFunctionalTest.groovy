@@ -74,7 +74,7 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 		file('buildSrc', buildFileName) << '''
 			repositories {
 				mavenCentral()
-				maven { url = 'https://repo.nokeedev.net/release' }
+				maven { url = 'https://repo.nokee.dev/release' }
 			}
 
 			dependencies {
@@ -92,7 +92,7 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 			repositories {
 				mavenCentral()
 				jcenter() // for ansi-control-sequence-util
-				maven { url = 'https://repo.nokeedev.net/snapshot' }
+				maven { url = 'https://repo.nokee.dev/snapshot' }
 			}
 
 			dependencies {
@@ -138,7 +138,7 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 
 			repositories {
 				mavenCentral()
-				maven { url = 'https://repo.nokeedev.net/release' }
+				maven { url = 'https://repo.nokee.dev/release' }
 			}
 
 			dependencies {

@@ -79,7 +79,7 @@ class GradleWrapperNokeeVersionProviderFunctionalTest extends AbstractGradleSpec
 			buildscript {
 				repositories {
 					mavenCentral()
-					maven { url = 'https://repo.nokeedev.net/release' }
+					maven { url = 'https://repo.nokee.dev/release' }
 				}
 				dependencies {
 					classpath platform("dev.nokee:nokee-gradle-plugins:0.4.0")
@@ -96,7 +96,7 @@ class GradleWrapperNokeeVersionProviderFunctionalTest extends AbstractGradleSpec
 		file('buildSrc', buildFileName) << '''
 			repositories {
 				mavenCentral()
-				maven { url = 'https://repo.nokeedev.net/release' }
+				maven { url = 'https://repo.nokee.dev/release' }
 			}
 
 			dependencies {
@@ -113,7 +113,7 @@ class GradleWrapperNokeeVersionProviderFunctionalTest extends AbstractGradleSpec
 		file('buildSrc', buildFileName) << '''
 			repositories {
 				mavenCentral()
-				maven { url = 'https://repo.nokeedev.net/release' }
+				maven { url = 'https://repo.nokee.dev/release' }
 			}
 
 			dependencies {
@@ -137,7 +137,7 @@ class GradleWrapperNokeeVersionProviderFunctionalTest extends AbstractGradleSpec
 
 			repositories {
 				mavenCentral()
-				maven { url = 'https://repo.nokeedev.net/release' }
+				maven { url = 'https://repo.nokee.dev/release' }
 			}
 
 			dependencies {

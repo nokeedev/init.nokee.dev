@@ -17,7 +17,7 @@ class NokeeTaskShowVersionCommandFunctionalTest extends AbstractGradleSpecificat
 		file('buildSrc', buildFileName) << '''
 			repositories {
 				mavenCentral()
-				maven { url = 'https://repo.nokeedev.net/release' }
+				maven { url = 'https://repo.nokee.dev/release' }
 			}
 
 			dependencies {
