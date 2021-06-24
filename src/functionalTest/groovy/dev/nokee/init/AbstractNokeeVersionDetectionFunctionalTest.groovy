@@ -73,7 +73,7 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 	def "can detect Nokee version from build classpath configured via buildSrc"() {
 		file('buildSrc', buildFileName) << '''
 			repositories {
-				jcenter()
+				mavenCentral()
 				maven { url = 'https://repo.nokeedev.net/release' }
 			}
 
@@ -90,7 +90,8 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 	def "can detect Nokee snapshot version from build classpath"() {
 		file('buildSrc', buildFileName) << '''
 			repositories {
-				jcenter()
+				mavenCentral()
+				jcenter() // for ansi-control-sequence-util
 				maven { url = 'https://repo.nokeedev.net/snapshot' }
 			}
 
@@ -100,7 +101,7 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 		'''
 
 		expect:
-		def result = succeeds('nokee', showVersionFlag)
+		def result = executer.withoutDeprecationChecks().withTasks('nokee', showVersionFlag).build()
 		result.output.contains("Build '${buildPathUnderTest}' using Nokee version '0.5.0-12c22234' (from build classpath).")
 	}
 
@@ -136,7 +137,7 @@ abstract class AbstractNokeeVersionDetectionFunctionalTest extends AbstractGradl
 			}
 
 			repositories {
-				jcenter()
+				mavenCentral()
 				maven { url = 'https://repo.nokeedev.net/release' }
 			}
 

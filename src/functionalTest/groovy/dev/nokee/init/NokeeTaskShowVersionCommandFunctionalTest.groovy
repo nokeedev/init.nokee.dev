@@ -16,7 +16,7 @@ class NokeeTaskShowVersionCommandFunctionalTest extends AbstractGradleSpecificat
 	def "shows version provided by buildSrc included build"() {
 		file('buildSrc', buildFileName) << '''
 			repositories {
-				jcenter()
+				mavenCentral()
 				maven { url = 'https://repo.nokeedev.net/release' }
 			}
 

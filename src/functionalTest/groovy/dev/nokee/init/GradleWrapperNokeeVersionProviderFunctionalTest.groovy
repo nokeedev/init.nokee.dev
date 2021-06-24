@@ -78,7 +78,7 @@ class GradleWrapperNokeeVersionProviderFunctionalTest extends AbstractGradleSpec
 		file(settingsFileName) << '''
 			buildscript {
 				repositories {
-					jcenter()
+					mavenCentral()
 					maven { url = 'https://repo.nokeedev.net/release' }
 				}
 				dependencies {
@@ -95,7 +95,7 @@ class GradleWrapperNokeeVersionProviderFunctionalTest extends AbstractGradleSpec
 	def "takes version from buildSrc dependency"() {
 		file('buildSrc', buildFileName) << '''
 			repositories {
-				jcenter()
+				mavenCentral()
 				maven { url = 'https://repo.nokeedev.net/release' }
 			}
 
@@ -112,7 +112,7 @@ class GradleWrapperNokeeVersionProviderFunctionalTest extends AbstractGradleSpec
 	def "prefers version from buildSrc dependency instead of environment variable"() {
 		file('buildSrc', buildFileName) << '''
 			repositories {
-				jcenter()
+				mavenCentral()
 				maven { url = 'https://repo.nokeedev.net/release' }
 			}
 
@@ -136,7 +136,7 @@ class GradleWrapperNokeeVersionProviderFunctionalTest extends AbstractGradleSpec
 			}
 
 			repositories {
-				jcenter()
+				mavenCentral()
 				maven { url = 'https://repo.nokeedev.net/release' }
 			}
 
